@@ -1,5 +1,7 @@
+edu/utexas/tacc/tapis/cmd/driver/FileDelete.class
 edu/utexas/tacc/tapis/cmd/driver/SystemGetAsJobs.class
 edu/utexas/tacc/tapis/cmd/driver/FileGetPathPerms.class
+edu/utexas/tacc/tapis/cmd/driver/SystemGetSchedulerProfile.class
 edu/utexas/tacc/tapis/cmd/driver/JobSubmit.class
 edu/utexas/tacc/tapis/cmd/driver/AppGetPermissions.class
 edu/utexas/tacc/tapis/cmd/driver/AppCheckHealth.class
@@ -16,12 +18,15 @@ edu/utexas/tacc/tapis/cmd/driver/CMDUtilsParameters.class
 edu/utexas/tacc/tapis/cmd/driver/SystemCheckHealth.class
 edu/utexas/tacc/tapis/cmd/driver/SystemUpdateCreds.class
 edu/utexas/tacc/tapis/cmd/driver/JobGetHistory.class
+edu/utexas/tacc/tapis/cmd/driver/SystemCreateSchedulerProfile.class
 edu/utexas/tacc/tapis/cmd/driver/FilesList.class
 edu/utexas/tacc/tapis/cmd/driver/AppDisable.class
 edu/utexas/tacc/tapis/cmd/driver/AppCheckReady.class
 edu/utexas/tacc/tapis/cmd/driver/AppsGet.class
 edu/utexas/tacc/tapis/cmd/driver/SystemPatch.class
+edu/utexas/tacc/tapis/cmd/driver/SystemGetSchedulerProfiles.class
 edu/utexas/tacc/tapis/cmd/driver/AppGetLatestVersion.class
+edu/utexas/tacc/tapis/cmd/driver/FileMkDir.class
 edu/utexas/tacc/tapis/cmd/driver/AppEnable.class
 edu/utexas/tacc/tapis/cmd/driver/SystemDisable.class
 edu/utexas/tacc/tapis/cmd/driver/TestUtils.class
@@ -29,6 +34,7 @@ edu/utexas/tacc/tapis/cmd/driver/SystemCreate.class
 edu/utexas/tacc/tapis/cmd/driver/AppDelete.class
 edu/utexas/tacc/tapis/cmd/driver/JobGet.class
 edu/utexas/tacc/tapis/cmd/driver/SystemCheckReady.class
+edu/utexas/tacc/tapis/cmd/driver/SystemDeleteSchedulerProfile.class
 edu/utexas/tacc/tapis/cmd/driver/AppGet.class
 edu/utexas/tacc/tapis/cmd/driver/JobSubmitAndGet.class
 edu/utexas/tacc/tapis/cmd/driver/AppPatch.class

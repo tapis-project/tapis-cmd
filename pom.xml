@@ -1,15 +1,56 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>edu.utexas.tacc.tapis</groupId>
-    <artifactId>tapis-shared-java</artifactId>
-    <version>2.0.2-SNAPSHOT</version>
-  </parent>
-  <artifactId>tapis-shared-cmd</artifactId>
-  <name>tapis-shared-cmd</name>
-  
-  <dependencies>
-  		<dependency>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>edu.utexas.tacc.tapis</groupId>
+        <artifactId>tapis-bom</artifactId>
+        <version>[2.0,3.0)</version>
+        <!-- Set empty relative path to avoid maven warning and-->
+        <!--   ensure parent is found in local repository if that-->
+        <!--   is the only place it exists.-->
+        <!--	<relativePath></relativePath>-->
+    </parent>
+
+    <artifactId>tapis-cmd</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>Tapis command</name>
+    <description>TAPIS java commands code</description>
+    <url>https://github.com/tapis-project/tapis-cmd</url>
+
+    <scm>
+        <connection>scm:git:git@github.com:tapis-project/tapis-cmd.git</connection>
+        <url>https://github.com/tapis-project/tapis-cmd</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <!--  Default to no release to suppress signing etc      -->
+        <skip.signing>true</skip.signing>
+        <!-- Source encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Most properties set in parent tapis-bom   -->
+        <!-- Properties can be overridden here         -->
+        <!-- Version of tapis-shared-java to be used.  --> 
+        <!-- Individual projects may want to override. -->
+<!--        <tapis-client-java.version>1.11.0</tapis-client-java.version>-->
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <!-- There are only test dependencies on testng -->
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>tapis-shared-lib</artifactId>
             <version>${tapis-shared-java.version}</version>
@@ -34,33 +75,94 @@
             <artifactId>jobs-client</artifactId>
             <version>${tapis-client-java.version}</version>
         </dependency> 
-  </dependencies>
-  
-  
-  <build>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>files-client</artifactId>
+            <version>${tapis-client-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>systems-client</artifactId>
+            <version>${tapis-client-java.version}</version>
+        </dependency>
+    </dependencies>
+
+     <profiles>
+      <!-- Profile for building using TACC repositories -->
+      <profile>
+        <id>tacc</id>
+        <activation> <activeByDefault>true</activeByDefault> </activation>
+        <repositories>
+          <repository>
+            <id>tapis-local-snapshots</id>
+            <name>Local repo for snapshots</name>
+            <url>http://c002.rodeo.tacc.utexas.edu:30044/repository/maven-snapshots</url>
+            <releases>  <enabled>false</enabled> </releases>
+            <snapshots> <enabled>true</enabled>  </snapshots>
+          </repository>
+          <repository>
+            <id>tapis-local-releases</id>
+            <name>Local repo for releases</name>
+            <url>http://c002.rodeo.tacc.utexas.edu:30044/repository/maven-releases</url>
+          </repository>
+        </repositories>
+      </profile>
+      <!-- Profile for building without using TACC repositories -->
+      <profile>
+        <id>tacc-external</id>
+      </profile>
+     </profiles>
+
+    <build>
         <sourceDirectory>src/main/java</sourceDirectory>
-
         <plugins>
-            <!-- See parent pom for configuration details.           -->
-            <!-- Capture the git commit hash and branch identifiers. -->
-            <!-- See parent pom for configuration details. -->
+            <!--  gitflow-maven-plugin supports various git workflow steps, such as gitflow:release-start-->
+            <!--    gitflow:release-finish, gitflow:feature-start, gitflow:feature-finish-->
+            <!-- For configuration see parent pom tapis-bom.xml -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <!-- The version is set in the parent pom -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
+                <groupId>com.amashchenko.maven.plugin</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    
-        <finalName>shared-cmd</finalName>
+
+        <!-- buildnumber-maven-plugin updates properties in resources -->
+        <resources>
+            <!-- Write the project version number to the specified file. -->
+            <!-- Setting the targetPath puts the file into the jar at the -->
+            <!-- specified root-relative directory. The the modified -->
+            <!-- tapis.version file is always copied to the target/classes -->
+            <!-- directory. Do the same for other data that we want to -->
+            <!-- capture. A jar and war file will contain these files -->
+            <!-- as long as the templated files are in the configured -->
+            <!-- directory in the child project. -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/tapis.version</include>
+                    <include>**/tapis.fullversion</include>
+                    <include>**/git.info</include>
+                    <include>**/build.time</include>
+                </includes>
+            </resource>
+        <!-- For some reason, we have to tell maven, surefire or testng -->
+            <!-- that all main/resources need to be copied to some target -->
+            <!-- directory. We also have to tell them to NOT undo filtering -->
+            <!-- for the files that we explicitly filter above. Good stuff. -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes>
+                    <exclude>**/tapis.version</exclude>
+                    <exclude>**/tapis.fullversion</exclude>
+                    <exclude>**/git.info</exclude>
+                    <exclude>**/build.time</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 </project>
