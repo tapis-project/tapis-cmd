@@ -1,0 +1,4 @@
+{
+	"batchScheduler": "SLURM",
+	"jobIsBatch": true
+}

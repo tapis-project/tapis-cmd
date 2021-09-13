@@ -1,0 +1,3 @@
+{
+"jobRuntimes": [{"runtimeType": "DOCKER", "version": "20.10.7"}, {"runtimeType": "SINGULARITY", "version": "3.7.4"}]
+}

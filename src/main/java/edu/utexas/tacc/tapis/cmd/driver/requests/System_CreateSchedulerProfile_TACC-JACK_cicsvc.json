@@ -1,0 +1,8 @@
+{
+    "name": "TACC-JACK",
+    "owner": "cicsvc",
+    "description": "Test profile for TACC Slurm for JACK",
+    "moduleLoadCommand": "module load",
+    "modulesToLoad": ["tacc-singularity"],
+    "hiddenOptions": ["MEM"]
+}
