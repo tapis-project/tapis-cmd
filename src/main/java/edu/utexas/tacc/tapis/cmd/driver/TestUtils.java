@@ -7,6 +7,10 @@ import java.nio.file.Path;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
+import edu.utexas.tacc.tapis.client.shared.ITapisClient;
+
 public class TestUtils 
 {
     // The profiles are always in the $HOME/TapisProfiles directory.
@@ -69,5 +73,13 @@ public class TestUtils
 		}
         
         return "ERROR IN READING IN KEY FROM PEM";
+    }
+    
+    public static void setOboHeaders(ITapisClient client, String oboUser, String oboTenant)
+    {
+        if (!StringUtils.isBlank(oboUser)) { 
+            client.addDefaultHeader("X-TAPIS-USER", oboUser);
+            client.addDefaultHeader("X-TAPIS-TENANT", oboTenant);
+        }
     }
 }
