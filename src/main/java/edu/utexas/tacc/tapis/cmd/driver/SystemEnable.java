@@ -13,26 +13,29 @@ public class SystemEnable
      */
     public static void main(String[] args) throws Exception
     {
+    	//----------------------- INITIALIZE PARMS -----------------------//
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for SystemEnable has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.systemName == null)
     		throw new Exception("systemName is null and is required for SystemEnable operation, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for SystemEnable operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the app.
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         int count = sysClient.enableSystem(parms.systemName);
         System.out.println("Systems updated: " + count);
-        
         //expecting true to be returned, meaning the system has been properly enabled
         System.out.println("Result of isEnabled() test for system " + parms.systemName + " is: " + sysClient.isEnabled(parms.systemName));
     }

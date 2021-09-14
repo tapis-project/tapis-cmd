@@ -1,0 +1,22 @@
+{
+	"id": "tapisv3-exec2-demo-test",
+	"description": "Systems for testing jobs for jack",
+	"systemType": "LINUX",
+	"owner": "testuser2",
+	"host": "129.114.17.113",
+	"enabled": true,
+	"effectiveUserId": "testuser2",
+	"defaultAuthnMethod": "PKI_KEYS",
+	"authnCredential": {
+        "privateKey": "",
+        "publicKey": ""
+	},
+	"rootDir": "/home/testuser2",
+	"transferMethods": [
+	  "SFTP"
+	],
+	"port": 22,
+	"canExec": true,
+	"jobRuntimes": [{"runtimeType": "DOCKER", "version": "0.0.1d"}, {"runtimeType": "SINGULARITY", "version": "0.0.1"}],
+	"jobWorkingDir": "workdir"
+}

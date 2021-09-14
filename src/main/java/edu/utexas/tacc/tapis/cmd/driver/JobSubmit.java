@@ -21,18 +21,21 @@ public class JobSubmit
      */
     public static void main(String[] args) throws Exception
     {
+    	//----------------------- INITIALIZE PARMS -----------------------//
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for JobSubmit has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.reqFilename == null)
     		throw new Exception("reqFilename is null and is required for JobSubmit operation, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for JobSubmit operation, THROWING ERROR");
     	
+    	//----------------------- CONFIGURE REQUEST FILE PATH -----------------------//
     	// Get the current directory.
         String curDir = System.getProperty("user.dir");
         String reqDir = curDir + "/" + REQUEST_SUBDIR;
@@ -43,6 +46,7 @@ public class JobSubmit
         Path req = Path.of(request);
         String reqString = Files.readString(req);
         
+        //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         String url = props.getProperty("BASE_URL");
@@ -51,20 +55,19 @@ public class JobSubmit
         // Informational message.
         System.out.println("Processing " + req.toString() + ".");
         System.out.println("Contacting Jobs Service at " + url + ".");
-        // System.out.println(reqString);
         
+        //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into a job submission request.
         ReqSubmitJob submitReq = TapisGsonUtils.getGson().fromJson(reqString, ReqSubmitJob.class);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create a job client.
         var jobClient = new JobsClient(url, props.getProperty("USER_JWT"));
         Job job = jobClient.submitJob(submitReq);
         System.out.println(TapisGsonUtils.getGson(true).toJson(job));
-        
         System.out.println();
         System.out.println("-----------------");
         System.out.println(job.getParameterSet());
         System.out.println(job.getUuid());
-    	
     }
 }

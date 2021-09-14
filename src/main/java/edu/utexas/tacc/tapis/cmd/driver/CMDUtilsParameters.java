@@ -17,12 +17,10 @@ public final class CMDUtilsParameters
 	/* ********************************************************************** */
 	/*                               Constants                                */
 	/* ********************************************************************** */
-	// Tracing.
-	//private static final Logger _log = LoggerFactory.getLogger(CMDUtilsParameters.class);
-	
 	//Name Lengths
 	public static final int MAX_NAME_LEN = 255;
 	public static final int MIN_NAME_LEN = 1;
+
 	/* ********************************************************************** */
 	/*                                 Fields                                 */
 	/* ********************************************************************** */
@@ -254,8 +252,5 @@ public final class CMDUtilsParameters
 	    //----------------------------------------------------------------------------
 	    // TODO: ADD SYNTAX CHECKS ON PATH AND FILENAMES FROM PATHSANITIZER
 	    //----------------------------------------------------------------------------
-	    
 	}
-	
-	
 }

@@ -21,12 +21,14 @@ public class AppPatch
      */
     public static void main(String[] args) throws Exception
     {
+    	//----------------------- INITIALIZE PARMS -----------------------//
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for AppPatch has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.reqFilename == null)
     		throw new Exception("reqFilename is null and is required for AppPatch operation, THROWING ERROR");
     	
@@ -39,6 +41,7 @@ public class AppPatch
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for AppPatch operation, THROWING ERROR");
     	
+    	//----------------------- CONFIGURE REQUEST FILE PATH -----------------------//
     	// Get the current directory.
         String curDir = System.getProperty("user.dir");
         String reqDir = curDir + "/" + REQUEST_SUBDIR;
@@ -52,12 +55,15 @@ public class AppPatch
         // Informational message.
         System.out.println("Processing " + req.toString() + ".");
         
+        //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request
         ReqPatchApp payload = TapisGsonUtils.getGson().fromJson(reqString, ReqPatchApp.class);
     	
+        //----------------------- READ IN JWT PROFILE -----------------------//
         //Read base url and jwt from file
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the app.
         var appsClient = new AppsClient(props.getProperty("BASE_URL"),props.getProperty("USER_JWT"));
         appsClient.patchApp(parms.appName, parms.appVersion, payload);

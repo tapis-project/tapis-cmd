@@ -13,18 +13,22 @@ public class AppsGet
      */
 	public static void main(String[] args) throws Exception
 	{
+		//----------------------- INITIALIZE PARMS -----------------------//
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for AppsGet has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for AppsGet operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the app.
         System.out.println("Retrieving all apps accessible to the caller");
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));

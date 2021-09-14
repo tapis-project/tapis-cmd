@@ -19,18 +19,21 @@ public class SystemCreateSchedulerProfile
      */
 	public static void main(String[] args) throws Exception
 	{
+		//----------------------- INITIALIZE PARMS -----------------------//
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for SystemCreateSchedulerProfile has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.reqFilename == null)
     		throw new Exception("reqFilename is null and is required for SystemCreateSchedulerProfile operation, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for SystemCreateSchedulerProfile operation, THROWING ERROR");
     	
+    	//----------------------- CONFIGURE REQUEST FILE PATH -----------------------//
     	// Get the current directory.
         String curDir = System.getProperty("user.dir");
         String reqDir = curDir + "/" + REQUEST_SUBDIR;
@@ -44,11 +47,14 @@ public class SystemCreateSchedulerProfile
         // Informational message.
         System.out.println("Processing " + req.toString() + ".");
 
+        //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         ReqCreateSchedulerProfile schedReq = TapisGsonUtils.getGson().fromJson(reqString, ReqCreateSchedulerProfile.class);
         
+        //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the scheduler profile
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         sysClient.createSchedulerProfile(schedReq);

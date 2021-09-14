@@ -12,12 +12,14 @@ public class FileDelete
     */
 	public static void main(String[] args) throws Exception
 	{
+		//----------------------- INITIALIZE PARMS -----------------------//
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for FileMkDir has failed");
         }
 
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for FileMkDir operation, THROWING ERROR");
     	
@@ -27,9 +29,11 @@ public class FileDelete
     	if(parms.pathName == null)
     		throw new Exception("pathName is null and is required for FileMkDir operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the app.
         var filesClient = new FilesClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         var fileResp = filesClient.delete(parms.systemName, parms.pathName);

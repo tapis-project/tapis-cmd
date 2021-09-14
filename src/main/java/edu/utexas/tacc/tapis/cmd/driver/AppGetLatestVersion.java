@@ -16,21 +16,25 @@ public class AppGetLatestVersion
 	
 	public static void main(String[] args) throws Exception
 	{
+		//----------------------- INITIALIZE PARMS -----------------------//
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for AppGetLatestVersion has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.appName == null)
     		throw new Exception("appName is null and is required for AppGetLatestVersion operation, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for AppGetLatestVersion operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
 
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Get the latest app version.
         System.out.println("Getting latest version of " + parms.appName + ".");
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));

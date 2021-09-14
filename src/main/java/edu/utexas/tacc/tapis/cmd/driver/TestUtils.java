@@ -65,7 +65,8 @@ public class TestUtils
         Path credFilePath = Path.of(fileName);
     	
         try {
-			String credContents = Files.readString(credFilePath);
+			String credContents = new String(Files.readString(credFilePath));
+			//System.out.println(credContents);
 			return credContents;
         } catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -82,4 +83,7 @@ public class TestUtils
             client.addDefaultHeader("X-TAPIS-TENANT", oboTenant);
         }
     }
+    
+    
+    
 }

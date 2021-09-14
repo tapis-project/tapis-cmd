@@ -21,18 +21,21 @@ public class AppCreate
      */
     public static void main(String[] args) throws Exception
     {
+    	//----------------------- INITIALIZE PARMS -----------------------//
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for appCreate has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.reqFilename == null)
     		throw new Exception("reqFilename is null and is required for appCreate, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for appCreate, THROWING ERROR");
     	
+    	//----------------------- CONFIGURE REQUEST FILE PATH -----------------------//
         // Get the current directory.
         String curDir = System.getProperty("user.dir");
         String reqDir = curDir + "/" + REQUEST_SUBDIR;
@@ -47,14 +50,16 @@ public class AppCreate
         
         // Informational message.
         System.out.println("Processing " + req.toString() + ".");
-        // System.out.println(reqString);
         
+        //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
         ReqCreateApp appReq = TapisGsonUtils.getGson().fromJson(reqString, ReqCreateApp.class);
         
+        //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the app.
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         appsClient.createApp(appReq);

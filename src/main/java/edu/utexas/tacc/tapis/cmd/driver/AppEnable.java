@@ -13,22 +13,26 @@ public class AppEnable
      */
 	public static void main(String[] args) throws Exception
 	{
+		//----------------------- INITIALIZE PARMS -----------------------//
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for AppEnable has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.appName == null)
     		throw new Exception("appName is null and is required for AppEnable operation, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for AppEnable operation, THROWING ERROR");
     	
-    	// Read base url and jwt from file.
+    	//----------------------- READ IN JWT PROFILE -----------------------//
+    	// Read base url and jwt from file
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-        // Enable the app.
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        // Enable the app
         System.out.println("Enabling app " + parms.appName + ".");
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
     	int count = appsClient.enableApp(parms.appName);

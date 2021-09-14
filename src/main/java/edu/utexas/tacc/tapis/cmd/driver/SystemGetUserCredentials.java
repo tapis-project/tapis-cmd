@@ -12,15 +12,16 @@ public class SystemGetUserCredentials
      *  SystemGetUserCredentials -jwt <jwt filename located in $HOME/Tapis-cmd/jwt> -system <name of system> -oboUser <name of obo user> -oboTenant <name of obo tenant>
      *  -user <name of user>
      */
-
 	public static void main(String[] args) throws Exception
 	{
+		//----------------------- INITIALIZE PARMS -----------------------//
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for SystemGetUserCredentials has failed");
         }
 		
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.systemName == null)
     		throw new Exception("systemName is null and is required for SystemGetUserCredentials operation, THROWING ERROR");
     	
@@ -36,16 +37,20 @@ public class SystemGetUserCredentials
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for SystemGetUserCredentials operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
 		
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Get User Credentials
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
   
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         //get the obo parts and assign them after running check
         sysClient.addDefaultHeader("X-TAPIS-TENANT", parms.oboTenant);
         sysClient.addDefaultHeader("X-TAPIS-USER", parms.oboUser);
       
+        //----------------------- USE CLIENT OBJECT -----------------------//
         var sysUserCreds = sysClient.getUserCredential(parms.systemName, parms.userName);
         System.out.println(sysUserCreds.toString());
 	}

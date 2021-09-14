@@ -14,12 +14,14 @@ public class JobGetHistory
      */
 	public static void main(String[] args) throws Exception
 	{
+		//----------------------- INITIALIZE PARMS -----------------------//
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for JobGetHistory has failed");
+          throw new Exception("Parms initialization for JobGetHistory has failed",e);
         }
 		
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.jobUuid == null)
     		throw new Exception("jobName is null and is required for JobGetHistory operation, THROWING ERROR");
     	
@@ -38,12 +40,13 @@ public class JobGetHistory
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for JobGetHistory operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         var jobClient = new JobsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         var job = jobClient.getJobHistory(parms.jobUuid, Integer.parseInt(parms.limit), parms.orderBy, Integer.parseInt(parms.skip), null, Integer.parseInt(parms.totalCount));
-	
         System.out.println(job.toString());
 	}
 }

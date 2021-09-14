@@ -14,12 +14,14 @@ public class FilesList
      */
     public static void main(String[] args) throws Exception
     {
+    	//----------------------- INITIALIZE PARMS -----------------------//
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for FilesList has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.systemName == null)
     		throw new Exception("systemName is null and is required for FilesList operation, THROWING ERROR");
     	
@@ -38,9 +40,11 @@ public class FilesList
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for FilesList operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
     	
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the app.
         var filesClient = new FilesClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         var list = filesClient.listFiles(parms.systemName, parms.pathName, Integer.parseInt(parms.limit), Long.parseLong(parms.offset), Boolean.parseBoolean(parms.meta));

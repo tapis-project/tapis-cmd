@@ -14,12 +14,14 @@ public class SystemGetAsJobs
      */
     public static void main(String[] args) throws Exception
     {
+    	//----------------------- INITIALIZE PARMS -----------------------//
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for SystemGetAsJobs has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.systemName == null)
     		throw new Exception("systemName is null and is required for SystemGetAsJobs operation, THROWING ERROR");
     	
@@ -32,12 +34,15 @@ public class SystemGetAsJobs
     	if(parms.oboTenant == null)
     		throw new Exception("oboUser is null and is required for SystemGetAsJobs operation, THROWING ERROR");
     	
+    	//----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Get the system.
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         //get the obo parts and assign them after running check
         sysClient.addDefaultHeader("X-TAPIS-TENANT", parms.oboTenant);
         sysClient.addDefaultHeader("X-TAPIS-USER", parms.oboUser);
@@ -45,6 +50,8 @@ public class SystemGetAsJobs
         Boolean returnCreds = Boolean.TRUE;
         Boolean checkExec   = Boolean.FALSE;
         AuthnMethod  defaultAuthMethod = null;
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         var sys = sysClient.getSystem(parms.systemName, returnCreds, defaultAuthMethod, checkExec);
         System.out.println(sys.toString());
     }

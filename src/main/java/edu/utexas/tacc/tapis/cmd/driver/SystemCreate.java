@@ -21,12 +21,14 @@ public class SystemCreate
      */
     public static void main(String[] args) throws Exception
     {
+    	//----------------------- INITIALIZE PARMS -----------------------//
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
           throw new Exception("Parms initialization for SystemCreate has failed");
         }
     	
+    	//----------------------- VALIDATE PARMS -----------------------//
     	if(parms.reqFilename == null)
     		throw new Exception("reqFilename is null and is required for SystemCreate operation, THROWING ERROR");
     	
@@ -39,6 +41,7 @@ public class SystemCreate
     	if(parms.privKey == null)
     		throw new Exception("privKey is null and is required for SystemCreate operation, THROWING ERROR");
     	
+    	//----------------------- CONFIGURE REQUEST FILE PATH -----------------------//
         // Get the current directory.
         String curDir = System.getProperty("user.dir");
         String reqDir = curDir + "/" + REQUEST_SUBDIR;
@@ -52,9 +55,11 @@ public class SystemCreate
         // Informational message.
         System.out.println("Processing " + req.toString() + ".");
         
+        //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
         ReqCreateSystem sysReq = TapisGsonUtils.getGson().fromJson(reqString, ReqCreateSystem.class);
         
+        //----------------------- RETRIEVE AND ASSIGN PUB AND PRIV KEYS -----------------------//
         if(sysReq.getDefaultAuthnMethod().toString() == "PKI_KEYS") 
         {
             ReqCreateCredential credReq = new ReqCreateCredential();
@@ -63,12 +68,11 @@ public class SystemCreate
             sysReq.setAuthnCredential(credReq);
         }
         
-        //COMMENT ADDED TO VIEW AuthnCredentail PASSING THROUGH CORRECTLY
-        //System.out.println(sysReq.getAuthnCredential());
-       
+        //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
+        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
         // Create the system.
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         sysClient.createSystem(sysReq);
