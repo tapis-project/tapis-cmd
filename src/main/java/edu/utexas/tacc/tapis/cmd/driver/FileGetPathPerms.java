@@ -34,9 +34,15 @@ public class FileGetPathPerms
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Check permissions.
         var filesClient = new FilesClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         var filePerm = filesClient.getFilePermissions(parms.systemName, parms.pathName, parms.jwtFilename);
         if (filePerm == null) {
             System.out.println("Null list returned!");

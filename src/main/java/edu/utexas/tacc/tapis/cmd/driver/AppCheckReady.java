@@ -27,10 +27,16 @@ public class AppCheckReady
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
-        
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Check App Health
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         System.out.println("Result of check ready: " + appsClient.checkReady());
 	}
 }

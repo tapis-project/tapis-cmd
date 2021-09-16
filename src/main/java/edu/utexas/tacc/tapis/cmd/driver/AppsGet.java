@@ -28,10 +28,16 @@ public class AppsGet
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.
         System.out.println("Retrieving all apps accessible to the caller");
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         var apps = appsClient.getApps();
         System.out.println(apps.toString());
 	}

@@ -30,9 +30,15 @@ public class SystemGetSchedulerProfile
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
+   
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         var sys = sysClient.getSchedulerProfile(parms.schedulerName);
         System.out.println(sys.toString());
 	}

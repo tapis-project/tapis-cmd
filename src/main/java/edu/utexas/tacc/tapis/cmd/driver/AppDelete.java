@@ -31,12 +31,17 @@ public class AppDelete
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Delete the app.
         System.out.println("Deleting app " + parms.appName + ".");
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
-    	int count = appsClient.deleteApp(parms.appName);
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
+  
+        //----------------------- USE CLIENT OBJECT -----------------------//
+        int count = appsClient.deleteApp(parms.appName);
     	System.out.println("Apps deleted: " + count);
 	}
-
 }

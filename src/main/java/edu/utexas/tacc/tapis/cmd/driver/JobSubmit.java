@@ -60,9 +60,15 @@ public class JobSubmit
         // Convert json string into a job submission request.
         ReqSubmitJob submitReq = TapisGsonUtils.getGson().fromJson(reqString, ReqSubmitJob.class);
         
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create a job client.
         var jobClient = new JobsClient(url, props.getProperty("USER_JWT"));
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         Job job = jobClient.submitJob(submitReq);
         System.out.println(TapisGsonUtils.getGson(true).toJson(job));
         System.out.println();

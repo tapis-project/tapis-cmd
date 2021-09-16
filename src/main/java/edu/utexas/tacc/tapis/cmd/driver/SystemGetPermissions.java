@@ -35,10 +35,16 @@ public class SystemGetPermissions
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Get Permissions
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
-    	var sysPerm = sysClient.getSystemPermissions(parms.systemName, parms.userName);
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
+        var sysPerm = sysClient.getSystemPermissions(parms.systemName, parms.userName);
     	System.out.println("Permissions for user: " + parms.userName + ", on system: " + parms.systemName + ", include: " + sysPerm.toString());
 	}
 }

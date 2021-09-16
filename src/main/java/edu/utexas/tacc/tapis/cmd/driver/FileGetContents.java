@@ -38,13 +38,18 @@ public class FileGetContents
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Check file contents
         var filesClient = new FilesClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         var fileContents = filesClient.getFileContents(parms.systemName, parms.pathName, Boolean.parseBoolean(parms.zipFlag));
         System.out.println("File Name: " + fileContents.getName());
         System.out.println("Class Name: " + fileContents.getClass()); 
         filesClient.close();
 	}
-
 }

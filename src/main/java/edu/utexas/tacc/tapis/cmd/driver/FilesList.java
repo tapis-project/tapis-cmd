@@ -44,9 +44,15 @@ public class FilesList
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
     	
-        //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.
         var filesClient = new FilesClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
         var list = filesClient.listFiles(parms.systemName, parms.pathName, Integer.parseInt(parms.limit), Long.parseLong(parms.offset), Boolean.parseBoolean(parms.meta));
         if (list == null) {
             System.out.println("Null list returned!");

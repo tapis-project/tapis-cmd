@@ -72,7 +72,6 @@ public class TestUtils
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
         return "ERROR IN READING IN KEY FROM PEM";
     }
     
@@ -83,7 +82,4 @@ public class TestUtils
             client.addDefaultHeader("X-TAPIS-TENANT", oboTenant);
         }
     }
-    
-    
-    
 }

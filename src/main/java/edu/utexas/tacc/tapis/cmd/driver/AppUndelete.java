@@ -31,11 +31,17 @@ public class AppUndelete
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
         
-      //----------------------- CREATE AND USE CLIENT OBJECT -----------------------//
+        //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Undelete the app.
         System.out.println("Undeleting app " + parms.appName + ".");
         var appsClient = new AppsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
-    	int count = appsClient.undeleteApp(parms.appName);
+  
+        //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
+        
+        //----------------------- USE CLIENT OBJECT -----------------------//
+        int count = appsClient.undeleteApp(parms.appName);
     	System.out.println("Apps updated: " + count);
 	}
 }

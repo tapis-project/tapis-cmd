@@ -43,9 +43,8 @@ public class SystemGetAsJobs
         var sysClient = new SystemsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
         
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
-        //get the obo parts and assign them after running check
-        sysClient.addDefaultHeader("X-TAPIS-TENANT", parms.oboTenant);
-        sysClient.addDefaultHeader("X-TAPIS-USER", parms.oboUser);
+        if(parms.oboTenant != null)
+        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         Boolean returnCreds = Boolean.TRUE;
         Boolean checkExec   = Boolean.FALSE;
