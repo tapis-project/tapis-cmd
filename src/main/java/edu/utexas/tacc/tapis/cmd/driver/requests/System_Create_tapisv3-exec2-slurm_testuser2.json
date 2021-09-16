@@ -1,0 +1,42 @@
+{
+	"id": "tapisv3-exec2-slurm",
+	"description": "Systems for testing jobs",
+	"systemType": "LINUX",
+	"owner": "testuser2",
+	"host": "129.114.17.113",
+	"enabled": true,
+	"effectiveUserId": "testuser2",
+	"defaultAuthnMethod": "PKI_KEYS",
+	"authnCredential": {
+		"privateKey": "",
+		"publicKey": ""
+	},
+	"rootDir": "/home/testuser2",
+	"transferMethods": [
+	  "SFTP"
+	],
+	"port": 22,
+	"canExec": true,
+	"jobRuntimes": [{"runtimeType": "DOCKER", "version": "0.0.1d"}, {"runtimeType": "SINGULARITY", "version": "0.0.1"}],
+	"jobWorkingDir": "workdir",
+    "jobIsBatch": true,
+    "batchScheduler": "SLURM",
+    "batchLogicalQueues": [
+       {
+           "name": "tapisNormal",
+           "hpcQueueName": "debug",
+           "maxJobs": 50,
+           "maxJobsPerUser": 10,
+           "maxNodeCount": 16,
+           "minNodeCount": 1,
+           "maxCoresPerNode": 68,
+           "minCoresPerNode": 1,
+           "maxMemoryMB": 16384,
+           "minMemoryMB": 1,
+           "maxMinutes": 60,
+           "minMinutes": 1
+       }
+    ],
+    "batchDefaultLogicalQueue": "tapisNormal"
+}
+

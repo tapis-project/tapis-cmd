@@ -8,8 +8,8 @@
 	"effectiveUserId": "testuser2",
 	"defaultAuthnMethod": "PKI_KEYS",
 	"authnCredential": {
-        "privateKey": "tapisv3-exec2-jack_priv",
-        "publicKey": "tapisv3-exec2-jack_pub"
+        "privateKey": "",
+        "publicKey": ""
 	},
 	"rootDir": "/home/testuser2",
 	"transferMethods": [
