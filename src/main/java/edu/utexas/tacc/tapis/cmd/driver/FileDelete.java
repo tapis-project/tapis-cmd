@@ -16,7 +16,7 @@ public class FileDelete
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for FileMkDir has failed");
+          throw new Exception("Parms initialization for FileMkDir has failed with Exception: ",e);
         }
 
     	//----------------------- VALIDATE PARMS -----------------------//

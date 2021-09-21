@@ -17,7 +17,7 @@ public class AppEnable
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for AppEnable has failed");
+          throw new Exception("Parms initialization for AppEnable has failed with Exception: ",e);
         }
     	
     	//----------------------- VALIDATE PARMS -----------------------//

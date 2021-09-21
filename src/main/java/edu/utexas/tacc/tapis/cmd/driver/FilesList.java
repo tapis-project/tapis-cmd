@@ -18,7 +18,7 @@ public class FilesList
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for FilesList has failed");
+          throw new Exception("Parms initialization for FilesList has failed with Exception: ",e);
         }
     	
     	//----------------------- VALIDATE PARMS -----------------------//

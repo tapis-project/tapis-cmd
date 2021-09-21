@@ -18,7 +18,7 @@ public class FileGetContents
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for FileGetContents has failed");
+          throw new Exception("Parms initialization for FileGetContents has failed with Exception: ",e);
         }
     	
     	//----------------------- VALIDATE PARMS -----------------------//

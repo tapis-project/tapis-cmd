@@ -18,7 +18,7 @@ public class JobGetHistory
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for JobGetHistory has failed",e);
+          throw new Exception("Parms initialization for JobGetHistory has failed with Exception: ",e);
         }
 		
     	//----------------------- VALIDATE PARMS -----------------------//

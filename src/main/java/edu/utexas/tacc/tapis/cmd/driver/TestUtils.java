@@ -5,7 +5,6 @@ import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,18 +12,13 @@ import edu.utexas.tacc.tapis.client.shared.ITapisClient;
 
 public class TestUtils 
 {
-    // The profiles are always in the $HOME/TapisProfiles directory.
-    // The profiles contain the BASE_URL and USER_JWT key/value pairs.
-    public static String PROFILE_DIRECTORY = "TapisProfiles";
-    //TODO: NEED TO CHANGE THESE PREFIXES ONCE TAPIS-CMD IS MOVED TO OWN REPO OUT OF SHARED
-    public static String TAPIS_CMD_JWT_PROFILE_DIR = "TapisCmd/jwt";
+    public static final String TAPIS_CMD_JWT_PROFILE_DIR = "TapisCmd/jwt";
+    public static final String TAPIS_CMD_REQUEST_HOME_DIR = "TapisCmd/requests";
+    public static final String REQUEST_SUBDIR = "requests";
     
     // Profile file name extension.
-    public static String PROFILE_EXT = ".properties";
-    public static String PEM_EXT = ".pem";
-    
-    // Pattern used to split the obo string by its default separator "-"
-    public static Pattern dashPattern = Pattern.compile("-");
+    public static final String PROFILE_EXT = ".properties";
+    public static final String PEM_EXT = ".pem";
     
     /** Load the contents of the properties file into memory.  The property file
      * is expected to contain two key/value pairs:
@@ -42,7 +36,6 @@ public class TestUtils
     	// The path is created with the users current directory so that it does not depend on the variability
     	// of a users default tapis project directory. Rather it navigates backwards so that the prefix can be as dynamic as possible.
     	
-    	// TODO: CHECK WHETHER USER.DIR PASSES THROUGH CORRECTLY WHEN RUNNING THROUGH THE JAR, CAN MOST LIKELY DEPEND ON CLASSPATH
         String profileDirPrefix = System.getProperty("user.home");
         Path reqFile = Path.of(profileDirPrefix, TAPIS_CMD_JWT_PROFILE_DIR,profileName + PROFILE_EXT);
         String reqString = Files.readString(reqFile);
@@ -53,26 +46,11 @@ public class TestUtils
         return properties;
     }
     
-    /** Return the template for the profile path. */
-    public static String getProfilePathTemplate()
-    {
-        return "$HOME/" + PROFILE_DIRECTORY + "/<profileName>.properties";
-    }
     
-    
-    public static String getCredFile(String fileName)
+    public static String getCredFile(String fileName) throws Exception
     {
         Path credFilePath = Path.of(fileName);
-    	
-        try {
-			String credContents = new String(Files.readString(credFilePath));
-			//System.out.println(credContents);
-			return credContents;
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        return "ERROR IN READING IN KEY FROM PEM";
+        return (new String(Files.readString(credFilePath)));
     }
     
     public static void setOboHeaders(ITapisClient client, String oboUser, String oboTenant)
@@ -81,5 +59,20 @@ public class TestUtils
             client.addDefaultHeader("X-TAPIS-USER", oboUser);
             client.addDefaultHeader("X-TAPIS-TENANT", oboTenant);
         }
+    }
+    
+    public static String readRequestFile(String reqFileName) throws Exception
+    {
+    	Path homeDirPath = Path.of(System.getProperty("user.home") + "/" + TAPIS_CMD_REQUEST_HOME_DIR + "/" + reqFileName);
+    	System.out.println(System.getProperty("user.home") + "/" + TAPIS_CMD_REQUEST_HOME_DIR + "/" + reqFileName);
+    	Path userDirPath = Path.of(System.getProperty("user.dir") + "/" + REQUEST_SUBDIR + "/" + reqFileName);
+    	System.out.println(System.getProperty("user.dir") + "/" + REQUEST_SUBDIR + "/" + reqFileName);
+    	
+    	if(Files.isReadable(homeDirPath))
+    		return Files.readString(homeDirPath);
+    	else if(!Files.isReadable(userDirPath))
+    		throw new Exception("Request File: " + reqFileName + " could not be found in $HOME/TapisCmd/requests or in tapis-cmd/src/main/java/.../driver/requests \nTHROWING ERROR");
+    	else
+    		return Files.readString(userDirPath);
     }
 }

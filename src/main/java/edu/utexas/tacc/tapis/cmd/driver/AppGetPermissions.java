@@ -17,7 +17,7 @@ public class AppGetPermissions
 		CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for SystemEnable has failed");
+          throw new Exception("Parms initialization for SystemEnable has failed with Exception: ",e);
         }
 		
     	//----------------------- VALIDATE PARMS -----------------------//

@@ -17,7 +17,7 @@ public class SystemGet
     	CMDUtilsParameters parms = null;
     	try {parms = new CMDUtilsParameters(args);}
         catch (Exception e) {
-          throw new Exception("Parms initialization for SystemGet has failed");
+          throw new Exception("Parms initialization for SystemGet has failed with Exception: ",e);
         }
     	
     	//----------------------- VALIDATE PARMS -----------------------//
