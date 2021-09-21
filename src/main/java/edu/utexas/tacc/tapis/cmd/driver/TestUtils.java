@@ -64,9 +64,7 @@ public class TestUtils
     public static String readRequestFile(String reqFileName) throws Exception
     {
     	Path homeDirPath = Path.of(System.getProperty("user.home") + "/" + TAPIS_CMD_REQUEST_HOME_DIR + "/" + reqFileName);
-    	System.out.println(System.getProperty("user.home") + "/" + TAPIS_CMD_REQUEST_HOME_DIR + "/" + reqFileName);
     	Path userDirPath = Path.of(System.getProperty("user.dir") + "/" + REQUEST_SUBDIR + "/" + reqFileName);
-    	System.out.println(System.getProperty("user.dir") + "/" + REQUEST_SUBDIR + "/" + reqFileName);
     	
     	if(Files.isReadable(homeDirPath))
     		return Files.readString(homeDirPath);
