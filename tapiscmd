@@ -12,4 +12,4 @@ echo "Running class: $1 from jar: tapis-cmd.jar with args: $2"
 echo "|===============================================================|"
 echo ""
 
-java -cp tapis-cmd.jar edu.utexas.tacc.tapis.cmd.driver.$1 $2
+java -cp shaded-tapis-cmd.jar edu.utexas.tacc.tapis.cmd.driver.$1 $2
