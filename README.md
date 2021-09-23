@@ -22,7 +22,7 @@ a) To run from command line, navigate to same directory as the tapis-cmd.jar fil
 
 	Example CLI Command: 
 	
-	bash tapis-cmd (name of class) (args for class ex: -jwt (jwt filename)) **IN QUOTES**)
+	bash tapiscmd (name of class) (args for class ex: -jwt (jwt filename)) **IN QUOTES**)
 
 b) To run from IDE like Eclipse, build from the command line with "mvn clean install", import as an existing maven project,
      finally use a run configuration to pass the necessary parameters like -jwt (jwt filename)
