@@ -26,3 +26,8 @@ a) To run from command line, navigate to the target directory and run with the s
 
 b) To run from IDE like Eclipse, build from the command line with "mvn clean install", import as an existing maven project,
      finally use a run configuration to pass the necessary parameters like -jwt (jwt filename)
+
+#### Help Info
+
+For additional info on parameters pass any class "-help true" as an argument and information on 
+each parameter and its usage will be printed to command line for CLI and console for IDE.
