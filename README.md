@@ -16,7 +16,7 @@ Provides a convenient way for Tapis commands to be issued from within a Java IDE
 
 ### Running
 
-a) To run from command line, navigate to the target directory and run with the shell file 
+a) To run from command line, navigate to same directory as the tapis-cmd.jar file and run with the shell file 
 	NOTE: **final arguments after jar and class name must be in Quotes** 
               ex: "-jwt (jwt filename) -sys (system name)"
 
