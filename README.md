@@ -17,7 +17,7 @@ Provides a convenient way for Tapis commands to be issued from within a Java IDE
 
 a) To run from command line, navigate to the target directory and run with the shell file 
 	NOTE: **final arguments after jar and class name must be in Quotes** ex: "-jwt (jwt filename) -sys (system name)"
-	ex: bash CmdLauncher.sh (name of Jar without extension) (name of class) (args for class ex: -jwt (jwt filename)) **IN QUOTES**)"
+	ex: bash CmdLauncher.sh (name of Jar without extension) (name of class) (args for class ex: -jwt (jwt filename)) **IN QUOTES**)
 
 b) To run from IDE like Eclipse, build from the command line with "mvn clean install", import as an existing maven project,
      finally use a run configuration to pass the necessary parameters like -jwt (jwt filename)
