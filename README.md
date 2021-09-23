@@ -20,9 +20,9 @@ a) To run from command line, navigate to the target directory and run with the s
 	NOTE: **final arguments after jar and class name must be in Quotes** 
               ex: "-jwt (jwt filename) -sys (system name)"
 
-	**Example CLI Command:** 
+	Example CLI Command: 
 	
-	{bash CmdLauncher.sh (name of Jar without extension) (name of class) (args for class ex: -jwt (jwt filename)) **IN QUOTES**)}
+	bash CmdLauncher.sh (name of Jar without extension) (name of class) (args for class ex: -jwt (jwt filename)) **IN QUOTES**)
 
 b) To run from IDE like Eclipse, build from the command line with "mvn clean install", import as an existing maven project,
      finally use a run configuration to pass the necessary parameters like -jwt (jwt filename)
