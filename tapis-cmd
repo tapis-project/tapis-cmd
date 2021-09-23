@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#ARG 1: Name of class to be called from jar file
+#ARG 2: MUST BE IN QUOTES "<Arg 3>" Contains the rest of the command where parameters are passed in.
+#       For example if passing a jwt and system name it would look like: "-jwt <jwt name> -sys <system name>"
+
+class=$1
+
+echo ""
+echo "|===============================================================|"
+echo "Running class: $1 from jar: tapis-cmd.jar with args: $2" 
+echo "|===============================================================|"
+echo ""
+
+java -cp tapis-cmd.jar edu.utexas.tacc.tapis.cmd.driver.$1 $2
