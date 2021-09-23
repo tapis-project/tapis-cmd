@@ -46,13 +46,26 @@ public class TestUtils
         return properties;
     }
     
-    
-    public static String getCredFile(String fileName) throws Exception
+    /** Reads the contents of a cred file and returns it as a string
+     * 
+     * @param fullPathToCredFile full path with extension of the cred file to be read
+     * @return the contents of the cred file as a string
+     * @throws Exception
+     */
+    public static String getCredFile(String fullPathToCredFile) throws Exception
     {
-        Path credFilePath = Path.of(fileName);
+        Path credFilePath = Path.of(fullPathToCredFile);
         return (new String(Files.readString(credFilePath)));
     }
     
+    
+    /** Sets the default headers for X-TAPIS-USER and X-TAPIS-TENANT, which are used for 
+     * obo client operations
+     * 
+     * @param client the client that is being used as an extension of ITapisClient
+     * @param oboUser the username to operate on-behalf-of
+     * @param oboTenant the tenant to operate on-behalf-of
+     */
     public static void setOboHeaders(ITapisClient client, String oboUser, String oboTenant)
     {
         if (!StringUtils.isBlank(oboUser)) { 
@@ -61,6 +74,19 @@ public class TestUtils
         }
     }
     
+    
+    /** Reads contents of a json request file, looking first in $HOME/TapisCmd/requests
+     * and second in tapis-cmd/src/main/java/edu/utexas/tacc/tapis/cmd/driver/requests
+     * 
+     * NOTE: for CLI commands request files must be in $HOME/TapisCmd/requests
+     *       
+     *       for IDE commands request files can be in $HOME/TapisCmd/requests,
+     *       as well as tapis-cmd/src/main/java/edu/utexas/tacc/tapis/cmd/driver/requests
+     * 
+     * @param reqFileName the name of the json request file with .json extension
+     * @return the contents of the json file to be used for the request object
+     * @throws Exception
+     */
     public static String readRequestFile(String reqFileName) throws Exception
     {
     	Path homeDirPath = Path.of(System.getProperty("user.home") + "/" + TAPIS_CMD_REQUEST_HOME_DIR + "/" + reqFileName);
