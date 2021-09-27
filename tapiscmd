@@ -4,7 +4,7 @@
 #ARG 2: MUST BE IN QUOTES "<Arg 3>" Contains the rest of the command where parameters are passed in.
 #       For example if passing a jwt and system name it would look like: "-jwt <jwt name> -sys <system name>"
 
-class=$1
+#class=$1
 
 echo ""
 echo "|===============================================================|"
@@ -12,4 +12,10 @@ echo "Running class: $1 from jar: tapis-cmd.jar with args: $2"
 echo "|===============================================================|"
 echo ""
 
-java -cp shaded-tapis-cmd.jar edu.utexas.tacc.tapis.cmd.driver.$1 $2
+for i in $@
+do 
+        command+="$i "
+done
+
+
+java -cp target/shaded-tapis-cmd.jar edu.utexas.tacc.tapis.cmd.driver.$command

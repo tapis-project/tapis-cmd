@@ -16,13 +16,12 @@ Provides a convenient way for Tapis commands to be issued from within a Java IDE
 
 ### Running
 
-a) To run from command line, navigate to same directory as the tapis-cmd.jar file and run with the shell file 
-	NOTE: **final arguments after class name must be in Quotes** 
+a) To run from command line, navigate to the top level directory and run with the shell file 
               ex: "-jwt (jwt filename) -sys (system name)"
 
 	Example CLI Command: 
 	
-	bash tapiscmd (name of class) (args for class ex: -jwt (jwt filename)) **IN QUOTES**)
+	./tapiscmd (name of class) (args for class ex: -jwt (jwt filename) )
 
 b) To run from IDE like Eclipse, build from the command line with "mvn clean install", import as an existing maven project,
      finally use a run configuration to pass the necessary parameters like -jwt (jwt filename)
