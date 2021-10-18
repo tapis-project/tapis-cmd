@@ -53,12 +53,12 @@ public final class CMDUtilsParameters
 	public String jwtFilename;
 	
 	@Option(name = "-limit", required = false, aliases = {"-lim"},
-			metaVar = "<limit>", usage = "used as integer in listFiles")
-	public String limit;
+			metaVar = "<limit>", usage = "used as integer in FilesList & JobGetHistory")
+	public int limit = 1000;
 	
 	@Option(name = "-meta", required = false,
-			metaVar = "<meta>", usage = "used as a boolean in listFiles")
-	public String meta;
+			metaVar = "<meta>", usage = "used as a boolean in FilesList")
+	public boolean meta = false;
 	
 	@Option(name = "-oboTenant", required = false, aliases = {"-oboT","-oTenant"},
 			metaVar = "<oboTenant>", depends = {"-oboUser"}, usage = "name field for tenant portion of obo")
@@ -69,8 +69,8 @@ public final class CMDUtilsParameters
 	public String oboUser;
 	
 	@Option(name = "-offset", required = false, aliases = {"-off"},
-			metaVar = "<offset>", usage = "used as long in listFiles")
-	public String offset;
+			metaVar = "<offset>", usage = "used as long in FilesList")
+	public long offset = 0;
 	
 	@Option(name = "-orderBy", required = false,
 			metaVar = "<orderBy>", usage = "key to order jobs by")
@@ -98,7 +98,7 @@ public final class CMDUtilsParameters
 	
 	@Option(name = "-skip", required = false,
 			metaVar = "<skip>", usage = "used as an integer in Jobs")
-	public String skip;
+	public int skip = 0;
 	
 	@Option(name = "-startAfter", required = false,
 			metaVar = "<startAfter>", usage = "used as a string in Jobs")
@@ -110,7 +110,7 @@ public final class CMDUtilsParameters
 	
 	@Option(name = "-totalCount", required = false, aliases = {"-total","count"},
 			metaVar = "<totalCount>", usage = "used as an integer in Jobs")
-	public String totalCount;
+	public int totalCount = 1000;
 	
 	@Option(name = "-user", required = false, aliases = {"-username","-u"},
 			metaVar = "<userName>", usage = "a user name")
@@ -118,7 +118,7 @@ public final class CMDUtilsParameters
 	
 	@Option(name = "-zip", required = false,
 			metaVar = "<zipFlag>", usage = "used as boolean in fileGetContents")
-	public String zipFlag;
+	public boolean zipFlag;
 	
 	/* ********************************************************************** */
 	/*                              Constructors                              */

@@ -28,15 +28,6 @@ public class FilesList
     	if(parms.pathName == null)
     		throw new Exception("pathName is null and is required for FilesList operation, THROWING ERROR");
     	
-    	if(parms.limit == null)
-    		throw new Exception("limit is null and is required for FilesList operation, THROWING ERROR");
-    	
-    	if(parms.offset == null)
-    		throw new Exception("offset is null and is required for FilesList operation, THROWING ERROR");
-    	
-    	if(parms.meta == null)
-    		throw new Exception("meta is null and is required for FilesList operation, THROWING ERROR");
-    	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for FilesList operation, THROWING ERROR");
     	
@@ -53,7 +44,7 @@ public class FilesList
         	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
-        var list = filesClient.listFiles(parms.systemName, parms.pathName, Integer.parseInt(parms.limit), Long.parseLong(parms.offset), Boolean.parseBoolean(parms.meta));
+        var list = filesClient.listFiles(parms.systemName, parms.pathName, parms.limit, parms.offset, parms.meta);
         if (list == null) {
             System.out.println("Null list returned!");
         } else {

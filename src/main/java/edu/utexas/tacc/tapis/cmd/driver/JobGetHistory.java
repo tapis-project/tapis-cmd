@@ -25,17 +25,8 @@ public class JobGetHistory
     	if(parms.jobUuid == null)
     		throw new Exception("jobName is null and is required for JobGetHistory operation, THROWING ERROR");
     	
-    	if(parms.limit == null)
-    		throw new Exception("limit is null and is required for JobGetHistory operation, THROWING ERROR");
-    	
     	if(parms.orderBy == null)
     		throw new Exception("orderBy is null and is required for JobGetHistory operation, THROWING ERROR");
-    	
-    	if(parms.skip == null)
-    		throw new Exception("skip is null and is required for JobGetHistory operation, THROWING ERROR");
-    	
-    	if(parms.totalCount == null)
-    		throw new Exception("totalCount is null and is required for JobGetHistory operation, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for JobGetHistory operation, THROWING ERROR");
@@ -52,7 +43,7 @@ public class JobGetHistory
         	TestUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
-        var job = jobClient.getJobHistory(parms.jobUuid, Integer.parseInt(parms.limit), parms.orderBy, Integer.parseInt(parms.skip), null, Integer.parseInt(parms.totalCount));
+        var job = jobClient.getJobHistory(parms.jobUuid, parms.limit, parms.orderBy, parms.skip, null, parms.totalCount);
         System.out.println(job.toString());
 	}
 }

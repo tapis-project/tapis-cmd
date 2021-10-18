@@ -31,9 +31,6 @@ public class FileGetContents
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for FileGetContents operation, THROWING ERROR");
     	
-    	if(parms.zipFlag == null)
-    		throw new Exception("zipFlag is null and is required for FileGetContents operation, THROWING ERROR");
-    	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
@@ -47,7 +44,7 @@ public class FileGetContents
         	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
-        var fileContents = filesClient.getFileContents(parms.systemName, parms.pathName, Boolean.parseBoolean(parms.zipFlag));
+        var fileContents = filesClient.getFileContents(parms.systemName, parms.pathName, parms.zipFlag);
         System.out.println("File Name: " + fileContents.getName());
         System.out.println("Class Name: " + fileContents.getClass()); 
         filesClient.close();
