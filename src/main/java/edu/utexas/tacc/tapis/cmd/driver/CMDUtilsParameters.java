@@ -56,9 +56,21 @@ public final class CMDUtilsParameters
 			metaVar = "<limit>", usage = "used as integer in FilesList & JobGetHistory")
 	public int limit = 1000;
 	
+	@Option(name = "-maxTime", required = false, aliases = {"-max"},
+			metaVar = "<maxTime>", depends = {"-minTime"}, usage = "The max allowed time for a job to run for load tests")
+	public int maxTime;
+	
 	@Option(name = "-meta", required = false,
 			metaVar = "<meta>", usage = "used as a boolean in FilesList")
 	public boolean meta = false;
+	
+	@Option(name = "-minTime", required = false, aliases = {"-min"},
+			metaVar = "<minTime>", depends = {"-maxTime"}, usage = "The min allowed time for a job to run for load tests")
+	public int minTime;
+	
+	@Option(name = "-numJobs", required = false, aliases = {"-jobsNum"},
+			metaVar = "<numJobs>", usage = "The number of jobs to run for load testing")
+	public int numJobs;
 	
 	@Option(name = "-oboTenant", required = false, aliases = {"-oboT","-oTenant"},
 			metaVar = "<oboTenant>", depends = {"-oboUser"}, usage = "name field for tenant portion of obo")
