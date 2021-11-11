@@ -1,0 +1,37 @@
+{
+    "name": "SleepSeconds_Max",
+    "appId": "SleepSeconds",
+    "appVersion": "0.0.1",
+    "fileInputs": [
+        {
+            "name": "file4",
+            "description": "A random text file",
+            "sourceUrl": "tapis://tapisv3-exec/jobs/input/file4.txt",
+            "targetPath": "file4.txt"
+        },
+        {
+            "name": "autoMountDir",
+            "description": "An automounted directory",
+            "sourceUrl": "tapislocal://exec.tapis/localMount",
+            "targetPath": "/userMount"
+        }
+    ],
+    "fileInputArrays": [
+        {
+            "name": "arrayfiles",
+            "description": "More random text files from array",
+            "sourceUrls": ["tapis://tapisv3-exec/jobs/input/file3.txt", "tapis://tapisv3-exec/jobs/input/file4.txt"],
+            "targetDir": "fromArray"
+        }
+    ],
+    "parameterSet": {
+      "envVariables": [ 
+        {"key": "JOBS_PARMS", "value": "15"}
+      ],
+      "archiveFilter": {
+        "includes": ["Sleep*"],
+        "includeLaunchFiles": true
+      }
+    },
+    "archiveSystemId" : "tapisv3-exec"
+}
