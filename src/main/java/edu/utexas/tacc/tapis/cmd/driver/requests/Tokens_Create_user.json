@@ -1,0 +1,7 @@
+{
+    "account_type": "USER",
+    "token_tenant_id": "a2cps-dev",
+    "token_username": "admin",
+    "target_site_id": "tacc",
+    "access_token_ttl": 14400
+}

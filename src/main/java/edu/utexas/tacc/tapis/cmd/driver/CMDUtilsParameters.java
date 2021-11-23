@@ -88,6 +88,10 @@ public final class CMDUtilsParameters
 			metaVar = "<orderBy>", usage = "key to order jobs by")
 	public String orderBy;
 	
+    @Option(name = "-pwd", required = false, aliases = {"-password"},
+            metaVar = "<password>", usage = "a password, typically a service password")
+    public String password;
+    
 	@Option(name = "-path", required = false, aliases = {"-pathName"},
 			metaVar = "<pathName>", usage = "a pathname pointing to directory")
 	public String pathName;

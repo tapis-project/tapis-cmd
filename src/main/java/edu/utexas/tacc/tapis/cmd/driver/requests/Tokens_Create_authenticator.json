@@ -1,0 +1,8 @@
+{
+    "account_type": "SERVICE",
+    "token_tenant_id": "admin",
+    "token_username": "authenticator",
+    "target_site_id": "tacc",
+    "access_token_ttl": 14400
+    
+}
