@@ -124,6 +124,10 @@ public final class CMDUtilsParameters
 			metaVar = "<systemName>", usage = "a system name")
 	public String systemName;
 	
+    @Option(name = "-tenant", required = false, 
+            metaVar = "<tenant>", usage = "the target tenant id")
+    public String tenant;
+    
 	@Option(name = "-totalCount", required = false, aliases = {"-total","count"},
 			metaVar = "<totalCount>", usage = "used as an integer in Jobs")
 	public int totalCount = 1000;
