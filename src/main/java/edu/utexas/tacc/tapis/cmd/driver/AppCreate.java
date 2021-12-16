@@ -4,7 +4,7 @@ import java.util.Properties;
 import java.lang.Exception;
 
 import edu.utexas.tacc.tapis.apps.client.AppsClient;
-import edu.utexas.tacc.tapis.apps.client.gen.model.ReqCreateApp;
+import edu.utexas.tacc.tapis.apps.client.gen.model.ReqPostApp;
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 
 public class AppCreate 
@@ -33,7 +33,7 @@ public class AppCreate
     	
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
-        ReqCreateApp appReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqCreateApp.class);
+        ReqPostApp appReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqPostApp.class);
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.

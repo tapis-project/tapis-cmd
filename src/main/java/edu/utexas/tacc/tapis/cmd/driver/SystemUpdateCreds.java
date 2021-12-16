@@ -80,7 +80,7 @@ public class SystemUpdateCreds
         	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
-        sysClient.updateUserCredential(parms.systemName, parms.userName, SystemsClient.buildReqCreateCredential(creds));
+        sysClient.updateUserCredential(parms.systemName, parms.userName, SystemsClient.buildReqPostCredential(creds));
         sysClient.close();
     }
 }

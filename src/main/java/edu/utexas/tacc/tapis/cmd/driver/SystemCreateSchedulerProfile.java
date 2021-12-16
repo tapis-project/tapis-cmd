@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 import edu.utexas.tacc.tapis.systems.client.SystemsClient;
-import edu.utexas.tacc.tapis.systems.client.gen.model.ReqCreateSchedulerProfile;
+import edu.utexas.tacc.tapis.systems.client.gen.model.ReqPostSchedulerProfile;
 
 public class SystemCreateSchedulerProfile 
 {
@@ -31,7 +31,7 @@ public class SystemCreateSchedulerProfile
         System.out.println("Processing " + parms.reqFilename);
 
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
-        ReqCreateSchedulerProfile schedReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqCreateSchedulerProfile.class);
+        ReqPostSchedulerProfile schedReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqPostSchedulerProfile.class);
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.

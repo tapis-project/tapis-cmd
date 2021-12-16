@@ -5,8 +5,8 @@ import java.lang.Exception;
 
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 import edu.utexas.tacc.tapis.systems.client.SystemsClient;
-import edu.utexas.tacc.tapis.systems.client.gen.model.ReqCreateSystem;
-import edu.utexas.tacc.tapis.systems.client.gen.model.ReqCreateCredential;
+import edu.utexas.tacc.tapis.systems.client.gen.model.ReqPostSystem;
+import edu.utexas.tacc.tapis.systems.client.gen.model.ReqPostCredential;
 public class SystemCreate
 {	
     /** Creates a system
@@ -40,12 +40,12 @@ public class SystemCreate
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
-        ReqCreateSystem sysReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqCreateSystem.class);
+        ReqPostSystem sysReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqPostSystem.class);
         
         //----------------------- RETRIEVE AND ASSIGN PUB AND PRIV KEYS -----------------------//
         if(sysReq.getDefaultAuthnMethod().toString() == "PKI_KEYS") 
         {
-            ReqCreateCredential credReq = new ReqCreateCredential();
+            ReqPostCredential credReq = new ReqPostCredential();
             credReq.setPrivateKey(TestUtils.getCredFile(parms.privKey));
             credReq.setPublicKey(TestUtils.getCredFile(parms.pubKey));
             sysReq.setAuthnCredential(credReq);
