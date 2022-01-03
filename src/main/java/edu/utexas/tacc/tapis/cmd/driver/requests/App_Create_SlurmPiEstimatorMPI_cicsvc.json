@@ -1,0 +1,24 @@
+{
+"id": "PiEstimatorMPI",
+"version": "0.0.1",
+"description": "Sample app for testing singularity MPI applications",
+"containerImage": "docker://rcardone/pi-estimator-mpi:0.1",
+"appType": "BATCH",
+"runtime": "SINGULARITY",
+"runtimeOptions": ["SINGULARITY_RUN"],
+"owner": "cicsvc",
+"jobAttributes": {
+  "description": "Run PI estimation on a number of nodes and cores",
+  "execSystemId": "slurmStampede2",
+  "archiveOnAppError": true,
+  "isMpi": true,
+  "mpiCmd": "ibrun",
+  "parameterSet": {
+      "appArgs": [ 
+        {"name": "program", "arg": "pi-mpi.py 10000000", "inputMode": "REQUIRED", "description": "Program with number of iterations"}
+      ]
+  },
+  "maxMinutes": 20,
+  "tags": [ "test", "pi-estimator", "mpi", "singularity" ]
+  }
+}
