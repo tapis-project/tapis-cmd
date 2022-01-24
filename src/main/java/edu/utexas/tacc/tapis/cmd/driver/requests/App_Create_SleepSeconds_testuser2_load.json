@@ -1,0 +1,24 @@
+{
+"id": "SleepSeconds-Load",
+"version": "0.0.1",
+"description": "Simple load test",
+"containerImage": "tapis/testapps:main",
+"appType": "FORK",
+"runtime": "DOCKER",
+"owner": "testuser2",
+"maxJobs": 30,
+"maxJobsPerUser": 30,
+"strictFileInputs": true,
+"jobAttributes": {
+  "description": "Sleep for a specified amount of time",
+  "execSystemId": "tapisv3-exec2",
+  "archiveOnAppError": true,
+  "parameterSet": {
+      "envVariables": [ 
+        {"key": "MAIN_CLASS", "value": "edu.utexas.tacc.testapps.tapis.SleepSeconds"}
+      ]
+  },
+  "maxMinutes": 4800,
+  "tags": [ "test", "sleep" ]
+  }
+}

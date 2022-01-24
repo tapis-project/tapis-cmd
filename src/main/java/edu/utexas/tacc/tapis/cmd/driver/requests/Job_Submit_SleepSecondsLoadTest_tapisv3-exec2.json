@@ -1,0 +1,13 @@
+{
+    "name": "SleepSecondsLoadTest",
+    "appId": "SleepSeconds-Load",
+    "appVersion": "0.0.1",
+    "parameterSet": {
+      "envVariables": [ 
+        {"key": "JOBS_PARMS", "value": "${SLEEP_SECS}"}
+      ],
+      "archiveFilter": {
+        "includeLaunchFiles": false
+      }
+    }
+}
