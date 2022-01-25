@@ -23,7 +23,7 @@ public class JobsSubmitLoadTest
     private static final String PLACEHOLDER_SECONDS = "${SLEEP_SECS}";
     
     // Ouput record format string.
-    private static final String FORMAT = "\n%-7s %-11s %-11s %-18s";
+    private static final String FORMAT = "\n%-7s %-11s %-40s %-11s %-18s";
     
     // Counter.
     private static int jobsSubmitted;
@@ -91,6 +91,7 @@ public class JobsSubmitLoadTest
                 rec.seqNo = i + 1;
                 rec.sleepSecs = sleepSecs;
                 rec.httpStatusCode = 200;
+                rec.jobUUID = job.getUuid();
     		    printJobRecord(rec);
 
     		} catch (TapisClientException e) {
@@ -167,8 +168,8 @@ public class JobsSubmitLoadTest
         
         // Create the formatter and add header lines.
         Formatter f = new Formatter(buf);
-        f.format(FORMAT, "SeqNo", "SleepSecs", "HTTP Code", "Response Message");
-        f.format(FORMAT, "-----", "---------", "---------", "----------------");
+        f.format(FORMAT, "SeqNo", "SleepSecs", "Job UUID                                ", "HTTP Code", "Response Message");
+        f.format(FORMAT, "-----", "---------", "----------------------------------------", "---------", "----------------");
         f.close();
         
         // Print the buffer.
@@ -185,11 +186,12 @@ public class JobsSubmitLoadTest
         String sleepSecs = Integer.toString(rec.sleepSecs);
         String httpStatusCode = Integer.toString(rec.httpStatusCode);
         String httpReasonPhrase = rec.message == null ? "" : rec.message;
+        String jobUUID = rec.jobUUID == null ? "" : rec.jobUUID;
         
         // Create a buffer and a formatter.
         StringBuilder buf = new StringBuilder();
         Formatter f = new Formatter(buf);
-        f.format(FORMAT, seqNo, sleepSecs, httpStatusCode, httpReasonPhrase);
+        f.format(FORMAT, seqNo, sleepSecs, jobUUID, httpStatusCode, httpReasonPhrase);
         f.close();
         
         // Print the record.
@@ -204,6 +206,7 @@ public class JobsSubmitLoadTest
         private int seqNo;
         private int sleepSecs;
         private int httpStatusCode;
+        private String jobUUID;
         private String message;
     }
 }
