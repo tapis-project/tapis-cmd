@@ -110,6 +110,9 @@ public class JobsSubmitLoadTest
     		
     		// Increment successful submission count.
     		jobsSubmitted++;
+    		
+    		// Sleep to give Jobs enough time to record job before the next one.
+//    		Thread.sleep(1000);
     	}
     	
         // Add a new line to the output.
