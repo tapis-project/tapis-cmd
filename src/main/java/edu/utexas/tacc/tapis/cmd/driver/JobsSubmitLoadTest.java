@@ -53,6 +53,10 @@ public class JobsSubmitLoadTest
     	if(parms.numJobs <= 0)
     		throw new Exception("numJobs is null and is required for JobsLoadTest operation, THROWING ERROR");
     	
+    	// Uncomment if you just want to get a randomized sleep seconds sample.
+//    	calculateAverageSleepSecs(parms, 1000);
+//    	if (true) return;
+    	
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
         Properties props = TestUtils.getTestProfile(parms.jwtFilename);
@@ -137,6 +141,18 @@ public class JobsSubmitLoadTest
                 if (sleepSecs == 0) sleepSecs = parms.maxSecs; // in case d == 0
             }
         return sleepSecs;
+    }
+    
+    /* ---------------------------------------------------------------------- */
+    /* calculateAverageSleepSecs:                                             */
+    /* ---------------------------------------------------------------------- */
+    private static int calculateAverageSleepSecs(CMDUtilsParameters parms, long iterations)
+    {
+        long sum = 0;
+        for (int i = 0; i < iterations; i++) sum += getSleepSecs(parms);
+        long avg = sum / iterations;
+        System.out.println("Average sleep seconds: " + avg);
+        return (int) avg;
     }
 
     /* ---------------------------------------------------------------------- */

@@ -1,4 +1,4 @@
 {
-  "maxJobs": 1000,
-  "maxJobsPerUser": 10
+  "maxJobs": 100000,
+  "maxJobsPerUser": 25
 }
