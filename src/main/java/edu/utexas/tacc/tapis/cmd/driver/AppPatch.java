@@ -40,11 +40,11 @@ public class AppPatch
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request
-        ReqPatchApp payload = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqPatchApp.class);
+        ReqPatchApp payload = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqPatchApp.class);
     	
         //----------------------- READ IN JWT PROFILE -----------------------//
         //Read base url and jwt from file
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.
@@ -52,7 +52,7 @@ public class AppPatch
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         appsClient.patchApp(parms.appName, parms.appVersion, payload);

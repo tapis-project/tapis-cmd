@@ -33,14 +33,14 @@ public class SKGrantAdmin
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
-        var req = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqGrantAdminRole.class);
+        var req = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqGrantAdminRole.class);
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename, true);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
-        var skClient = new SKClient(props.getProperty("BASE_URL")+"/v3", props.getProperty("USER_JWT"));
+        var skClient = new SKClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
   
         //----------------------- USE CLIENT OBJECT -----------------------//
         // Create role

@@ -31,11 +31,11 @@ public class SystemCreateSchedulerProfile
         System.out.println("Processing " + parms.reqFilename);
 
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
-        ReqPostSchedulerProfile schedReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqPostSchedulerProfile.class);
+        ReqPostSchedulerProfile schedReq = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqPostSchedulerProfile.class);
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the scheduler profile
@@ -43,7 +43,7 @@ public class SystemCreateSchedulerProfile
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         sysClient.createSchedulerProfile(schedReq);

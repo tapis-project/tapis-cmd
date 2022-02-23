@@ -32,7 +32,7 @@ public class FileGetPathPerms
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Check permissions.
@@ -40,7 +40,7 @@ public class FileGetPathPerms
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var filePerm = filesClient.getFilePermissions(parms.systemName, parms.pathName, parms.jwtFilename);

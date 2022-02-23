@@ -26,7 +26,7 @@ public class SystemCheckReady
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Check Ready
@@ -34,7 +34,7 @@ public class SystemCheckReady
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(systemsClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(systemsClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         System.out.println("Result of check ready: " + systemsClient.checkReady());

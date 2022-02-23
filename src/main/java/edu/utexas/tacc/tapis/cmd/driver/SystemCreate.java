@@ -40,20 +40,20 @@ public class SystemCreate
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
-        ReqPostSystem sysReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqPostSystem.class);
+        ReqPostSystem sysReq = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqPostSystem.class);
         
         //----------------------- RETRIEVE AND ASSIGN PUB AND PRIV KEYS -----------------------//
         if(sysReq.getDefaultAuthnMethod().toString() == "PKI_KEYS") 
         {
             ReqPostCredential credReq = new ReqPostCredential();
-            credReq.setPrivateKey(TestUtils.getCredFile(parms.privKey));
-            credReq.setPublicKey(TestUtils.getCredFile(parms.pubKey));
+            credReq.setPrivateKey(DriverUtils.getCredFile(parms.privKey));
+            credReq.setPublicKey(DriverUtils.getCredFile(parms.pubKey));
             sysReq.setAuthnCredential(credReq);
         }
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the system.
@@ -61,7 +61,7 @@ public class SystemCreate
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         sysClient.createSystem(sysReq);

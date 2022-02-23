@@ -29,7 +29,7 @@ public class SystemDisable
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Disable the System
@@ -37,7 +37,7 @@ public class SystemDisable
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         int count = sysClient.disableSystem(parms.systemName);

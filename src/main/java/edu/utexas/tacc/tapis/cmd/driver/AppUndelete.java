@@ -29,7 +29,7 @@ public class AppUndelete
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Undelete the app.
@@ -38,7 +38,7 @@ public class AppUndelete
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         int count = appsClient.undeleteApp(parms.appName);

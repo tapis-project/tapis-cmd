@@ -59,9 +59,8 @@ public class JobsSubmitLoadTest
     	
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename, true);
         String url = props.getProperty("BASE_URL");
-        if (!url.endsWith("/v3")) url += "/v3";
     
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create a job client.
@@ -69,10 +68,10 @@ public class JobsSubmitLoadTest
 
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-            TestUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
+            DriverUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
 
         // Get the request json as a string.
-        String json = TestUtils.readRequestFile(parms.reqFilename);
+        String json = DriverUtils.readRequestFile(parms.reqFilename);
         
         // Informational message.
         printHeader(parms, url);

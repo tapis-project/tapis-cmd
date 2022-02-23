@@ -32,9 +32,8 @@ public class JobSubmit
     	
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename, true);
         String url = props.getProperty("BASE_URL");
-        if (!url.endsWith("/v3")) url += "/v3";
         
         // Informational message.
         System.out.println("Processing " + parms.reqFilename + ".");
@@ -42,7 +41,7 @@ public class JobSubmit
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into a job submission request.
-        ReqSubmitJob submitReq = TapisGsonUtils.getGson().fromJson(TestUtils.readRequestFile(parms.reqFilename), ReqSubmitJob.class);
+        ReqSubmitJob submitReq = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqSubmitJob.class);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create a job client.
@@ -50,7 +49,7 @@ public class JobSubmit
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         Job job = jobClient.submitJob(submitReq);
