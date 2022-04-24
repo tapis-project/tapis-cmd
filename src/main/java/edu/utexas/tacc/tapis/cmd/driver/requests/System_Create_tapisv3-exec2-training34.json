@@ -1,0 +1,12 @@
+{
+    "id": "tapisv3-exec2",
+    "description": "Systems for testing jobs in training tenant",
+    "systemType": "LINUX",
+    "host": "129.114.17.113",
+    "effectiveUserId": "testuser2",
+    "defaultAuthnMethod": "PKI_KEYS",
+    "rootDir": "/home/testuser2/training34",
+    "canExec": true,
+    "jobRuntimes": [{"runtimeType": "DOCKER", "version": "0.0.1d"}],
+    "jobWorkingDir": "workdir"
+}
