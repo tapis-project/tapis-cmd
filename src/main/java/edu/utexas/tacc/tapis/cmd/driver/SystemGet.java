@@ -29,7 +29,7 @@ public class SystemGet
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.
@@ -37,7 +37,7 @@ public class SystemGet
         
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
        //----------------------- USE CLIENT OBJECT -----------------------//
         var sys = sysClient.getSystem(parms.systemName);

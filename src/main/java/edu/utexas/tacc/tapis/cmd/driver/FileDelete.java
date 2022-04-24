@@ -31,7 +31,7 @@ public class FileDelete
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.
@@ -39,7 +39,7 @@ public class FileDelete
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var fileResp = filesClient.delete(parms.systemName, parms.pathName);

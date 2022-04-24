@@ -33,7 +33,7 @@ public class FilesSubtreeList
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.
@@ -41,7 +41,7 @@ public class FilesSubtreeList
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var filesListSubtree = new FilesListSubtree(filesClient, parms.systemName, parms.pathName);

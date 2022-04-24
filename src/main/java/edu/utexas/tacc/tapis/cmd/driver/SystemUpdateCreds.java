@@ -63,13 +63,13 @@ public class SystemUpdateCreds
         //----------------------- RETRIEVE AND ASSIGN PUB AND PRIV KEYS IF PASSED IN-----------------------//
         if(parms.privKey != null && parms.pubKey != null)
         {
-        	creds.setPrivateKey(TestUtils.getCredFile(parms.privKey));
-        	creds.setPublicKey(TestUtils.getCredFile(parms.pubKey));
+        	creds.setPrivateKey(DriverUtils.getCredFile(parms.privKey));
+        	creds.setPublicKey(DriverUtils.getCredFile(parms.pubKey));
         }
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Update the credentials.
@@ -77,7 +77,7 @@ public class SystemUpdateCreds
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         sysClient.updateUserCredential(parms.systemName, parms.userName, SystemsClient.buildReqPostCredential(creds));

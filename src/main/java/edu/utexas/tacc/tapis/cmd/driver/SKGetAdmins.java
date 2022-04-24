@@ -31,10 +31,10 @@ public class SKGetAdmins
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename, true);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
-        var skClient = new SKClient(props.getProperty("BASE_URL")+"/v3", props.getProperty("USER_JWT"));
+        var skClient = new SKClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
   
         //----------------------- USE CLIENT OBJECT -----------------------//
         // Create role

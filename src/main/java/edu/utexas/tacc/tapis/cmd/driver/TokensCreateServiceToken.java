@@ -45,11 +45,11 @@ public class TokensCreateServiceToken
         Type ACCOUNT_TYPE = new TypeToken<AccountTypeEnum>(){}.getType();
         gsonBuilder.registerTypeAdapter(ACCOUNT_TYPE, new AccountTypeAdapter());
         var gson = gsonBuilder.create();
-    	CreateTokenParms tokReq = gson.fromJson(TestUtils.readRequestFile(parms.reqFilename), CreateTokenParms.class);
+    	CreateTokenParms tokReq = gson.fromJson(DriverUtils.readRequestFile(parms.reqFilename), CreateTokenParms.class);
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create the app.

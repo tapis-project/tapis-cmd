@@ -39,7 +39,7 @@ public class SystemGetUserCredentials
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
 		
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Get User Credentials
@@ -47,7 +47,7 @@ public class SystemGetUserCredentials
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var sysUserCreds = sysClient.getUserCredential(parms.systemName, parms.userName);

@@ -29,14 +29,14 @@ public class JobGet
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename, true);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         var jobClient = new JobsClient(props.getProperty("BASE_URL"), props.getProperty("USER_JWT"));
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var job = jobClient.getJob(parms.jobUuid);

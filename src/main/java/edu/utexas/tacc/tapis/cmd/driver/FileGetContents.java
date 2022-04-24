@@ -33,7 +33,7 @@ public class FileGetContents
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
         
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Check file contents
@@ -41,7 +41,7 @@ public class FileGetContents
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(filesClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var fileContents = filesClient.getFileContents(parms.systemName, parms.pathName, parms.zipFlag);

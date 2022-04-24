@@ -32,7 +32,7 @@ public class AppGetLatestVersion
     	
     	//----------------------- READ IN JWT PROFILE -----------------------//
     	// Read base url and jwt from file.
-        Properties props = TestUtils.getTestProfile(parms.jwtFilename);
+        Properties props = DriverUtils.getTestProfile(parms.jwtFilename);
 
         //----------------------- CREATE CLIENT OBJECT -----------------------//
         // Get the latest app version.
@@ -41,7 +41,7 @@ public class AppGetLatestVersion
   
         //----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if(parms.oboTenant != null)
-        	TestUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
+        	DriverUtils.setOboHeaders(appsClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var app = appsClient.getAppLatestVersion(parms.appName,_requireExecPerm,"");
