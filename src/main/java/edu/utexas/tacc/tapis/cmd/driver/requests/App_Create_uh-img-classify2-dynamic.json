@@ -1,0 +1,30 @@
+{
+    "id": "uh-img-classify2-dynamic",
+    "version": "0.1",
+    "description": "An image classifier run via FORK using docker.",
+    "runtime": "DOCKER",
+    "jobType": "FORK",
+    "containerImage": "tapis/img-classify2:0.1",
+    "jobAttributes": {
+        "execSystemId": "uh-exec-dynamic",
+        "execSystemExecDir": "${JobWorkingDir}/jobs/${JobUUID}",
+        "execSystemInputDir": "${JobWorkingDir}/jobs/${JobUUID}/data",
+        "execSystemOutputDir": "${JobWorkingDir}/jobs/${JobUUID}/output",
+        "parameterSet": {
+           "appArgs": [
+             { "name": "arg1", "arg": "--image_file" },
+             { "name": "inputFile",
+               "arg": "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/12231410/Labrador-Retriever-On-White-01.jpg"
+             }
+           ],
+           "archiveFilter":
+            { 
+              "includeLaunchFiles": true
+            }
+        },
+        "memoryMB": 2048,
+        "nodeCount": 1,
+        "coresPerNode": 4,
+        "maxMinutes": 10
+    }
+}

@@ -1,0 +1,40 @@
+{
+        "id": "uh-exec-dynamic",
+        "description": "System for testing jobs in training tenant",
+        "systemType": "LINUX",
+        "host": "129.114.17.159",
+        "effectiveUserId": "${apiUserId}",
+        "defaultAuthnMethod": "PASSWORD",
+        "rootDir": "/home",
+        "canExec": true,
+        "canRunBatch": true,
+        "jobRuntimes": [
+            {
+                "runtimeType": "DOCKER",
+                "version": "0.0.1d"
+            },
+            {
+                "runtimeType": "SINGULARITY",
+                "version": "0.0.1"
+            }
+        ],
+        "jobWorkingDir": "${apiUserId}/workdir",
+        "batchScheduler": "SLURM",
+        "batchLogicalQueues": [
+            {
+                "name": "tapisNormal",
+                "hpcQueueName": "debug",
+                "maxJobs": 5,
+                "maxJobsPerUser": 1,
+                "minNodeCount": 1,
+                "maxNodeCount": 1,
+                "minCoresPerNode": 1,
+                "maxCoresPerNode": 4,
+                "minMemoryMB": 1,
+                "maxMemoryMB": 4096,
+                "minMinutes": 1,
+                "maxMinutes": 60
+            }
+        ],
+        "batchDefaultLogicalQueue": "tapisNormal"
+}
