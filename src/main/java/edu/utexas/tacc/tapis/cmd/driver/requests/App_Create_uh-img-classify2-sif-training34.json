@@ -1,10 +1,11 @@
 {
-    "id": "uh-img-classify2-dynamic",
+    "id": "uh-img-classify-sif-training34",
     "version": "0.1",
-    "description": "An image classifier run via FORK using docker with dynamic user.",
-    "runtime": "DOCKER",
+    "description": "An image classifier run via FORK using singularity sif file.",
+    "runtime": "SINGULARITY",
+    "runtimeOptions": ["SINGULARITY_RUN"],
     "jobType": "FORK",
-    "containerImage": "tapis/img-classify2:0.1",
+    "containerImage": "/tmp/img-classify-sing.sif",
     "jobAttributes": {
         "execSystemId": "uh-exec-dynamic",
         "execSystemExecDir": "${JobWorkingDir}/jobs/${JobUUID}",
