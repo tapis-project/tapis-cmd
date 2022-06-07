@@ -3,7 +3,6 @@ package edu.utexas.tacc.tapis.cmd.driver;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
-import java.lang.Exception;
 
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 import edu.utexas.tacc.tapis.systems.client.SystemsClient;
@@ -80,7 +79,7 @@ public class SystemUpdateCreds
         	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
-        sysClient.updateUserCredential(parms.systemName, parms.userName, SystemsClient.buildReqPostCredential(creds));
+        sysClient.updateUserCredential(parms.systemName, parms.userName, creds);
         sysClient.close();
     }
 }

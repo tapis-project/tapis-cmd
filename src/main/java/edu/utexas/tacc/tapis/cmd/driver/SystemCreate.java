@@ -1,12 +1,11 @@
 package edu.utexas.tacc.tapis.cmd.driver;
 
 import java.util.Properties;
-import java.lang.Exception;
 
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 import edu.utexas.tacc.tapis.systems.client.SystemsClient;
+import edu.utexas.tacc.tapis.systems.client.gen.model.ReqPostPutCredential;
 import edu.utexas.tacc.tapis.systems.client.gen.model.ReqPostSystem;
-import edu.utexas.tacc.tapis.systems.client.gen.model.ReqPostCredential;
 public class SystemCreate
 {	
     /** Creates a system
@@ -45,7 +44,7 @@ public class SystemCreate
         //----------------------- RETRIEVE AND ASSIGN PUB AND PRIV KEYS -----------------------//
         if(sysReq.getDefaultAuthnMethod().toString() == "PKI_KEYS") 
         {
-            ReqPostCredential credReq = new ReqPostCredential();
+            var credReq = new ReqPostPutCredential();
             credReq.setPrivateKey(DriverUtils.getCredFile(parms.privKey));
             credReq.setPublicKey(DriverUtils.getCredFile(parms.pubKey));
             sysReq.setAuthnCredential(credReq);
