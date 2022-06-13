@@ -10,7 +10,7 @@ public class JobGetHistory
 	/** gets job history 
      * 
      * JobGetHistory -jwt <jwt filename located in $HOME/Tapis-cmd/jwt> -jobUuid <Uuid of job> -limit <integer used for number of files to list>
-     * -skip <where in job list to begin history> -orderBy <field to order history by> -totalCount <used as an integer for jobGetHistory>
+     * -skip <where in job list to begin history> 
      */
 	public static void main(String[] args) throws Exception
 	{
@@ -25,8 +25,6 @@ public class JobGetHistory
     	if(parms.jobUuid == null)
     		throw new Exception("jobName is null and is required for JobGetHistory operation, THROWING ERROR");
     	
-    	if(parms.orderBy == null)
-    		throw new Exception("orderBy is null and is required for JobGetHistory operation, THROWING ERROR");
     	
     	if(parms.jwtFilename == null)
     		throw new Exception("jwtFilename is null and is required for JobGetHistory operation, THROWING ERROR");
@@ -43,7 +41,7 @@ public class JobGetHistory
         	DriverUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
-        var job = jobClient.getJobHistory(parms.jobUuid, parms.limit, parms.orderBy, parms.skip, null, parms.totalCount);
+        var job = jobClient.getJobHistory(parms.jobUuid, parms.limit, parms.orderBy, parms.skip, null);
         System.out.println(job.toString());
 	}
 }
