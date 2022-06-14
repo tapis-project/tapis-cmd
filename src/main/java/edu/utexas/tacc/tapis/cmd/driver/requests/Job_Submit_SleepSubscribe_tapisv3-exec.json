@@ -1,0 +1,27 @@
+{
+    "name": "SleepSeconds",
+    "appId": "SleepSeconds",
+    "appVersion": "0.0.1",
+    "parameterSet": {
+      "envVariables": [ 
+        {"key": "JOBS_PARMS", "value": "15"}
+      ],
+      "archiveFilter": {
+        "includes": ["Sleep*"],
+        "includeLaunchFiles": true
+      }
+    },
+    "subscriptions": [ 
+        {
+            "description": "Test subscriptions",
+            "eventCategoryFilter": "ALL",
+            "deliveryTargets": [
+                { 
+                    "deliveryMethod": "EMAIL",
+                    "deliveryAddress": "XXX@tacc.utexas.edu"
+                }
+            ] 
+        }
+    ],
+    "archiveSystemId" : "tapisv3-exec"
+}
