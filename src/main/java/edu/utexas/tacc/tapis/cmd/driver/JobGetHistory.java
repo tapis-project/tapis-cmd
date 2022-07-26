@@ -1,5 +1,6 @@
 package edu.utexas.tacc.tapis.cmd.driver;
 
+import java.util.Arrays;
 import java.util.Properties;
 import java.lang.Exception;
 
@@ -41,7 +42,7 @@ public class JobGetHistory
         	DriverUtils.setOboHeaders(jobClient, parms.oboUser, parms.oboTenant);
         
         //----------------------- USE CLIENT OBJECT -----------------------//
-        var job = jobClient.getJobHistory(parms.jobUuid, parms.limit, parms.orderBy, parms.skip, null);
-        System.out.println(job.toString());
+       var job = jobClient.getJobHistory(parms.jobUuid, parms.limit, parms.skip);
+       System.out.println(Arrays.deepToString(job.toArray()));
 	}
 }
