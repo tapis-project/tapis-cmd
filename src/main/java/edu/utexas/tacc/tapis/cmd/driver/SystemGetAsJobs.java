@@ -46,12 +46,8 @@ public class SystemGetAsJobs
         if(parms.oboTenant != null)
         	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
-        Boolean returnCreds = Boolean.TRUE;
-        Boolean checkExec   = Boolean.FALSE;
-        AuthnMethod  defaultAuthMethod = null;
-        
         //----------------------- USE CLIENT OBJECT -----------------------//
-        var sys = sysClient.getSystem(parms.systemName, returnCreds, defaultAuthMethod, checkExec);
+        var sys = sysClient.getSystemWithCredentials(parms.systemName);
         System.out.println(sys.toString());
     }
 }
