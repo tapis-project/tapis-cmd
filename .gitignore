@@ -9,6 +9,7 @@ test-output
 testrun.log
 
 # Intellij metadata files
+*.run
 *.idea
 *.ids
 *.iml
