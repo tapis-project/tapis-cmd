@@ -18,6 +18,7 @@ testrun.log
 *.imp
 *.ipr
 *.iws
+.attach_pid*
 
 # Eclipse metadata files
 .project
