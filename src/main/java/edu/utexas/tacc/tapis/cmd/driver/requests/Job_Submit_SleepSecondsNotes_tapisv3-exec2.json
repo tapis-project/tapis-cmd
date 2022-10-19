@@ -1,0 +1,27 @@
+{
+    "name": "SleepSeconds",
+    "appId": "SleepSeconds",
+    "appVersion": "0.0.1",
+    "parameterSet": {
+      "envVariables": [ 
+        {"key": "JOBS_PARMS", "value": "15", "description": "nothing important"}
+      ],
+      "archiveFilter": {
+        "includes": ["Sleep*"],
+        "includeLaunchFiles": true
+      }
+    },
+    "archiveSystemId" : "tapisv3-exec",
+    "notes": {
+        "fname": "bud",
+        "lname": "jones",
+        "count": 27,
+        "happy": true,
+        "nothing": null,
+        "obj": {
+            "f1": "v1",
+            "f2": 44
+        },
+        "array": ["x", "y", "z"]
+    }
+}
