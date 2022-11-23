@@ -1,0 +1,12 @@
+{
+	"id": "taccjobs",
+	"description": "System for accessing TACC job histories",
+	"systemType": "LINUX",
+	"owner": "icicle",
+	"host": "129.114.35.200",
+	"effectiveUserId": "icicle",
+	"defaultAuthnMethod": "PKI_KEYS",
+	"rootDir": "/home/icicle/taccjobs",
+	"canExec": false
+}
+
