@@ -40,7 +40,14 @@ public class SystemGet
         	DriverUtils.setOboHeaders(sysClient, parms.oboUser, parms.oboTenant);
         
        //----------------------- USE CLIENT OBJECT -----------------------//
-        var sys = sysClient.getSystem(parms.systemName);
-        System.out.println(sys.toString());
+       try
+       {
+         var sys = sysClient.getSystem(parms.systemName);
+         System.out.println(sys.toString());
+       }
+       catch (Exception e)
+       {
+         System.out.println("Caught: " + e);
+       }
     }
 }
