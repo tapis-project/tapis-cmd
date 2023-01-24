@@ -139,7 +139,18 @@ public final class CMDUtilsParameters
 	@Option(name = "-zip", required = false,
 			metaVar = "<zipFlag>", usage = "used as boolean in fileGetContents")
 	public boolean zipFlag;
-	
+
+	@Option(name = "-operation", required = false,
+			metaVar = "<operation>", usage = "used as operation in setFacl")
+	public String operation;
+
+	@Option(name = "-recursion", required = false,
+			metaVar = "<recursion>", usage = "used as recursion in setFacl")
+	public String recursion;
+
+	@Option(name = "-aclString", required = false,
+			metaVar = "<aclString>", usage = "used as aclString in setFacl")
+	public String aclString;
 	/* ********************************************************************** */
 	/*                              Constructors                              */
 	/* ********************************************************************** */
