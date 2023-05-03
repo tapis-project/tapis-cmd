@@ -45,6 +45,8 @@ public class FileMkDir
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         var fileResp = filesClient.mkdir(parms.systemName, parms.pathName);
-        System.out.println(fileResp.toString());
+		if(fileResp != null) {
+			System.out.println(fileResp.toString());
+		}
 	}
 }

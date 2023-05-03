@@ -123,8 +123,16 @@ public final class CMDUtilsParameters
 	@Option(name = "-system", required = false, aliases = {"-sys","-s"},
 			metaVar = "<systemName>", usage = "a system name")
 	public String systemName;
-	
-    @Option(name = "-tenant", required = false, 
+
+	@Option(name = "-allChildren", required = false,
+			metaVar = "<allChildren>", usage = "include all child systems")
+	public boolean allChildren;
+
+	@Option(name = "-childSystems", required = false, aliases = {},
+			metaVar = "<childSystemNames>", usage = "child systems to include")
+	public String childSystemNames;
+
+	@Option(name = "-tenant", required = false,
             metaVar = "<tenant>", usage = "the target tenant id")
     public String tenant;
     
