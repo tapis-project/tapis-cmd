@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 import edu.utexas.tacc.tapis.systems.client.SystemsClient;
-import edu.utexas.tacc.tapis.systems.client.gen.model.Credential;
+import edu.utexas.tacc.tapis.systems.client.gen.model.ReqUpdateCredential;
 
 public class SystemUpdateCreds
 {
@@ -57,7 +57,7 @@ public class SystemUpdateCreds
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
-        Credential creds = TapisGsonUtils.getGson().fromJson(reqString, Credential.class);
+        ReqUpdateCredential creds = TapisGsonUtils.getGson().fromJson(reqString, ReqUpdateCredential.class);
     
         //----------------------- RETRIEVE AND ASSIGN PUB AND PRIV KEYS IF PASSED IN-----------------------//
         if(parms.privKey != null && parms.pubKey != null)
