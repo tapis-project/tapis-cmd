@@ -3,6 +3,7 @@ package edu.utexas.tacc.tapis.cmd.driver;
 import java.util.Properties;
 
 import edu.utexas.tacc.tapis.notifications.client.NotificationsClient;
+import edu.utexas.tacc.tapis.client.shared.Utils;
 
 public class NotifGetSubscriptions
 {
@@ -39,7 +40,7 @@ public class NotifGetSubscriptions
         
         //----------------------- USE CLIENT OBJECT -----------------------//
         String subOwner = "jobs"; // change this to search for different subscription owners
-        var notifList = notifClient.getSubscriptions(subOwner);
+        var notifList = notifClient.getSubscriptions(Utils.DEFAULT_SEARCH, Utils.DEFAULT_SELECT_ALL, subOwner);
         System.out.println("Total number of notifications: " + notifList.size() + "\n");
         for (var sub : notifList) System.out.println(sub.toString() + "\n");
     }
