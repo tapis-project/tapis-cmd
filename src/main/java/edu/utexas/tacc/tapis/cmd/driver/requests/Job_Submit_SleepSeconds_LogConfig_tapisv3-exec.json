@@ -1,0 +1,19 @@
+{
+    "name": "SleepSeconds",
+    "appId": "SleepSeconds",
+    "appVersion": "0.0.1",
+    "parameterSet": {
+      "envVariables": [ 
+        {"key": "JOBS_PARMS", "value": "15"}
+      ],
+      "archiveFilter": {
+        "includes": ["Sleep*"],
+        "includeLaunchFiles": true
+      },
+      "logConfig": {
+        "stdoutFilename": "stdout-${JobUUID}.log",
+        "stderrFilename": "stderr-${JobUUID}.log"
+      }
+    },
+    "archiveSystemId" : "tapisv3-exec"
+}
