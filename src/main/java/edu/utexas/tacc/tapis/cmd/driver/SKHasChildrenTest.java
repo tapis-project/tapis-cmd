@@ -1,5 +1,7 @@
 package edu.utexas.tacc.tapis.cmd.driver;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.google.gson.JsonObject;
@@ -23,18 +25,33 @@ import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
  * 
  * @author rcardone
  */
-public class SKHasChildrenTest 
+final public class SKHasChildrenTest 
 {
+    /* ********************************************************************** */
+    /*                              Constants                                 */
+    /* ********************************************************************** */
 	// Total number of rows in this test.  Rows are numbered 1 to this total.
 	// The total is used to during checking to make sure the expected number
 	// of elements are returned.
-	private final static int TOTAL_ROWS = 4;
+	private final static int    TOTAL_ROWS = 4;      // depth of each role tree
+	private final static String COLUMN_NAMES = "ab"; // length implies num of role trees
+	private final static String PERM_NAMES   = "xy"; // length implies perms per role
 	
+    /* ********************************************************************** */
+    /*                                Fields                                  */
+    /* ********************************************************************** */
 	// Client shared by all methods.
-	CMDUtilsParameters _parms;
-	private SKClient   _skClient;
-	private boolean    _deleteRoles;
+	private CMDUtilsParameters _parms;
+	private SKClient       _skClient;
+	private boolean        _deleteRoles;
+	private List<TestName> _names;
 	
+    /* ********************************************************************** */
+    /*                            Public Methods                              */
+    /* ********************************************************************** */
+    /* ---------------------------------------------------------------------- */
+    /* main:                                                                  */
+    /* ---------------------------------------------------------------------- */
 	/** Create a test instance and execute it.
 	 * 
 	 * @param args command line arguments
@@ -46,6 +63,12 @@ public class SKHasChildrenTest
     	test.execute(args);
     }
     
+    /* ********************************************************************** */
+    /*                           Private Methods                              */
+    /* ********************************************************************** */
+    /* ---------------------------------------------------------------------- */
+    /* execute:                                                               */
+    /* ---------------------------------------------------------------------- */
     /** Main execution method. 
      */
     private void execute(String[] args) throws Exception
@@ -91,6 +114,9 @@ public class SKHasChildrenTest
         testHasChildren();
     }
     
+    /* ---------------------------------------------------------------------- */
+    /* testHasChildren:                                                       */
+    /* ---------------------------------------------------------------------- */
     /** Test whether the has_children flag works properly. 
      * @throws TapisClientException */
     private void testHasChildren() 
@@ -98,35 +124,91 @@ public class SKHasChildrenTest
     {
     	// The calls below assume rows 1 though TOTAL_ROWS are fully populated.
     	
-    	// Create role and permissions and add to parent.
-    	initRolesAndPerms(1, 'a', "xy", 0);
-    	initRolesAndPerms(1, 'b', "xy", 0);
-    	initRolesAndPerms(2, 'a', "xy", 1);
-    	initRolesAndPerms(2, 'b', "xy", 1);
-    	initRolesAndPerms(3, 'a', "xy", 2);
-    	initRolesAndPerms(3, 'b', "xy", 2);
-    	initRolesAndPerms(4, 'a', "xy", 3);
-    	initRolesAndPerms(4, 'b', "xy", 3);
+    	// Create all role and permission names.
+    	initNames();
+    	
+    	// Create roles and permissions and parent/child relationships.
+    	initRolesAndPerms();
     	
     	// Check what we just created.
-    	initRolesAndPermsCheck(1, 'a', "xy", 0);
-    	initRolesAndPermsCheck(1, 'b', "xy", 0);
-    	initRolesAndPermsCheck(2, 'a', "xy", 1);
-    	initRolesAndPermsCheck(2, 'b', "xy", 1);
-    	initRolesAndPermsCheck(3, 'a', "xy", 2);
-    	initRolesAndPermsCheck(3, 'b', "xy", 2);
-    	initRolesAndPermsCheck(4, 'a', "xy", 3);
-    	initRolesAndPermsCheck(4, 'b', "xy", 3);
-    	
-    	
+    	initRolesAndPermsCheck();
     	
     	System.out.println("SKHasChildrenTest successfully completed.");
     }
     
+    /* ---------------------------------------------------------------------- */
+    /* initNames:                                                             */
+    /* ---------------------------------------------------------------------- */
+    /** Create a list of all role and permission names that will be added to the
+     * database.  The naming conventions are:
+     * 
+     * 	- Roles:  "R" + rowNum + columnChar
+     *  - Permissions: "P" + rowNum + columnChar + "-" + permChar
+     * 
+     * Only one number appears in role names and this convention is used by 
+     * getParentRoleName() to derive a parent role name from a child's role name.
+     * 
+     * The _names field elements begin with row 1/column 1, then row 1/column 2, 
+     * row 2/column 1, and so on.  Here's what the first two elements (row 1/column 1
+     * and row 1/column 2) in the _names lists look like:
+     * 
+     *  	roleName: "R1a"
+     *  	permNames: ["R1a-x", "R1a-y"]
+     *  	row: 1
+     *  
+     *  	roleName: "R1b"
+     *  	permNames: ["R1b-x", "R1b-y"]
+     *  	row: 1
+     */
+    private void initNames()
+    {
+    	// Get the number of columns and perms from their name lengths.
+    	final int numColumns = COLUMN_NAMES.length();
+    	final int numPerms   = PERM_NAMES.length();
+    	
+    	// Initialize the names array.
+    	_names = new ArrayList<TestName>(TOTAL_ROWS * numColumns); 
+    	
+    	for (int i = 0; i < TOTAL_ROWS; i++)
+    	{
+    		final int row = i + 1;
+    		for (int j = 0; j < numColumns; j++)
+    		{
+    			var name = new TestName();
+    			name.row = row;
+    			name.roleName = "R" + row + COLUMN_NAMES.charAt(j);
+    			name.permNames = new String[numColumns];
+    	    	for (int k = 0; k < numPerms; k++)
+    	    		name.permNames[k] = "P" + row + COLUMN_NAMES.charAt(j) + 
+    	    		                    '-' + PERM_NAMES.charAt(k);
+    	    	
+    	    	// Save the name.
+    	    	_names.add(name);
+    	    	System.out.println("Adding name: " + name);
+    		}
+    	}
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /* getParentRoleName:                                                     */
+    /* ---------------------------------------------------------------------- */
+    private String getParentRoleName(TestName name)
+    {
+    	// This code relies on the role naming conventions established by
+    	// initNames in which the row number is the only number in the 
+    	// role name.  This method should not be called for row = 1.
+		String curRow  = Integer.toString(name.row);
+		String prevRow = Integer.toString(name.row - 1);
+		return name.roleName.replace(curRow, prevRow);  // should only replace 1 char
+    }
+    
+    /* ---------------------------------------------------------------------- */
+    /* initRolesAndPerms:                                                     */
+    /* ---------------------------------------------------------------------- */
     /** Create a role, add its permissions and, optionally, add it as a
      * child to the another role.  Roles can be thought of as arranged
-     * in a tree with rows and colums that indicate the parent-child and
-     * sibling relationships, respecitively.  
+     * in a tree with rows and columns that indicate the parent-child and
+     * sibling relationships, respectively.  
      * 
      * Roles are added to numbered rows starting at 1. Roles in the same
      * row are siblings and distinguished with an alphabetic name: a, b, c,
@@ -143,69 +225,87 @@ public class SKHasChildrenTest
      * has no parent.  For ease of testing, roles are usually added as 
      * children to only to roles in the previous row.
      * 
-     * @param row the row number of the role (1 or more)
-     * @param rowName the unique name of the role in a row
-     * @param permNames the permission names, each character is used in a permission name
-     * @param parentRow the role's parent, zero means no parent.
      * @throws TapisClientException 
      */
-    private void initRolesAndPerms(int row, char rowName, String permNames, int parentRow) 
+    private void initRolesAndPerms() 
      throws TapisClientException
     {
-    	// Create role name.
-    	String roleName = "R" + row + rowName;
-    	
-    	// Create the role's permission names.
-    	String[] perms = new String[permNames.length()];
-    	for (int i = 0; i < permNames.length(); i++)
-    		perms[i] = "P" + row + rowName + '-' + permNames.charAt(i);
-    	
-    	// Create the role.
-    	_skClient.createRole(_parms.tenant, roleName, "test role");
-    	
-    	// Add permissions to the role.
-    	for (var permName : perms) 
-    		 _skClient.addRolePermission(_parms.tenant, roleName, permName);
-    	 
-    	// Conditionally add to parent role.
-        if (parentRow > 0) {
-        	String parentRole = "R" + parentRow + rowName;
-   		 	_skClient.addChildRole(_parms.tenant, parentRole, roleName);
-        }
+    	// Create and populate each role.  All but the last role gets 
+    	// assigned to a parent role--the previous role that was processed.
+    	for (var name : _names) {
+        	// Create the role.
+        	_skClient.createRole(_parms.tenant, name.roleName, "test role");
+    		
+        	// Add permissions to the role.
+        	for (var permName : name.permNames) 
+        		 _skClient.addRolePermission(_parms.tenant, name.roleName, permName);
+
+        	// Conditionally add to parent role. Note that this code relies on
+        	// the fact that roles are processed in row order, from lowest to 
+        	// highest.  This ordering is implemented by initNames(). 
+        	if (name.row > 1) {
+        		String parentName = getParentRoleName(name);
+     		 	_skClient.addChildRole(_parms.tenant, parentName, name.roleName);
+        	}
+    	}
     }
     
-    /** Check some of the initial relationships.
+    /* ---------------------------------------------------------------------- */
+    /* initRolesAndPermsCheck:                                                */
+    /* ---------------------------------------------------------------------- */
+    /** Check some of the initial relationships:
+     * 
+     * 	1. That each role's immediate permission are the expected ones.
+     *  2. That the number of permissions available in a role is the expected 
+     *     sum of immediate and transitive permissions.
      */
-    private void initRolesAndPermsCheck(int row, char rowName, String permNames, int parentRow)
+    private void initRolesAndPermsCheck()
      throws TapisClientException
     {
-    	// Create role name.
-    	String roleName = "R" + row + rowName;
+    	// Check each role that was created.
+    	for (var name : _names) {
+    		// Retrieve role.
+    	    _skClient.getRoleByName(_parms.tenant, name.roleName);
     	
-    	// Create the role's permission names.
-    	String[] perms = new String[permNames.length()];
-    	for (int i = 0; i < permNames.length(); i++)
-    		perms[i] = "P" + row + rowName + '-' + permNames.charAt(i);
+    	    // Retrieve the role's immediate permissions.
+    	    boolean immediate = true;
+    	    var immediatePerms = _skClient.getRolePermissions(_parms.tenant, name.roleName, immediate);
     	
-    	// Retrieve role.
-    	_skClient.getRoleByName(_parms.tenant, roleName);
+    	    // Check the role's immediate permissions.
+    	    for (int i = 0; i < name.permNames.length; i++)
+    	    	if (!immediatePerms.contains(name.permNames[i]))
+    	    		throw new TapisClientException("Expected role " + name.roleName + " to contain " +
+    		                                   "	an immediate permission named " + name.permNames[i] + ".");
     	
-    	// Retrieve the role's immediate permissions.
-    	boolean immediate = true;
-    	var immediatePerms = _skClient.getRolePermissions(_parms.tenant, roleName, immediate);
+    	    // Retrieve all permissions available in this role.
+    	    immediate = false;
+    	    var allPerms = _skClient.getRolePermissions(_parms.tenant, name.roleName, immediate);
+    	    
+    	    // Check that all the permissions are returned.
+    	    int expectedPermCount = (TOTAL_ROWS - name.row + 1) * 2; // perms per role based on role row.
+    	    if (allPerms.size() != expectedPermCount)
+    	    	throw new TapisClientException("Expected role " + name.roleName + " to contain " +
+                             	expectedPermCount + " permission but found " + allPerms.size() + ".");
+    	}
+    }
+
+    /* ********************************************************************** */
+    /*                            TestName Class                              */
+    /* ********************************************************************** */
+    /** Container for role and permission name information. */
+    private static class TestName
+    {
+    	private int      row;
+    	private String   roleName;
+    	private String[] permNames;
     	
-    	// Check the role's immediate permissions.
-    	for (int i = 0; i < permNames.length(); i++)
-    		if (!immediatePerms.contains(perms[i]))
-    			throw new TapisClientException("Expected role " + roleName + " to contain " +
-    		                                   "an immediate permission named " + perms[i] + ".");
-    	
-    	// Check that all the permissions are returned.
-    	immediate = false;
-        var allPerms = _skClient.getRolePermissions(_parms.tenant, roleName, immediate);
-        int expectedPermCount = (TOTAL_ROWS - row + 1) * 2; // perms per role based on role row.
-        if (allPerms.size() != expectedPermCount)
-        	throw new TapisClientException("Expected role " + roleName + " to contain " +
-                             expectedPermCount + " permission but found " + allPerms.size() + ".");
+    	@Override
+    	public String toString() {
+    		String s =  "row: " + row + ", roleName: " + roleName + ", permNames: [";
+    		for (int i = 0; i < permNames.length; i++ ) 
+    			if (i == 0) s += permNames[i];
+    			else s += ", " + permNames[i];
+    		return s + "]";
+    	}
     }
 }
