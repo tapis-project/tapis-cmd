@@ -21,7 +21,8 @@ import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
  * 
  * The second is to run this test in debug mode with breakpoints at various places so
  * that the database and SK log can be inspected to verify that the optimizations 
- * actually avoid unnecessary recursive queries.
+ * actually avoid unnecessary recursive queries.  (Temporary log messages might work
+ * better to avoid timeouts.)
  * 
  * @author rcardone
  */
@@ -43,7 +44,7 @@ final public class SKHasChildrenTest
 	// Client shared by all methods.
 	private CMDUtilsParameters _parms;
 	private SKClient       _skClient;
-	private boolean        _deleteRoles;
+	private Boolean        _deleteRoles;
 	private List<TestName> _names;
 	
     /* ********************************************************************** */
@@ -97,6 +98,7 @@ final public class SKHasChildrenTest
     	
         // Set instance fields.
     	_deleteRoles = req.get("deleteRoles").getAsBoolean();
+    	if (_deleteRoles == null) _deleteRoles = Boolean.TRUE; // the default
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
@@ -132,6 +134,15 @@ final public class SKHasChildrenTest
     	
     	// Check what we just created.
     	initRolesAndPermsCheck();
+    	
+    	// Check that the user has all expected roles.
+    	checkUserRoles();
+    	
+    	// Remove child tests.
+    	removeChildRole();
+    	
+    	// Clean up all changes to the database.
+    	if (_deleteRoles) deleteRoles();
     	
     	System.out.println("SKHasChildrenTest successfully completed.");
     }
@@ -287,6 +298,88 @@ final public class SKHasChildrenTest
     	    	throw new TapisClientException("Expected role " + name.roleName + " to contain " +
                              	expectedPermCount + " permission but found " + allPerms.size() + ".");
     	}
+    }
+    
+    /* ---------------------------------------------------------------------- */
+    /* checkUserRoles:                                                        */
+    /* ---------------------------------------------------------------------- */
+    /** This method grants a role with children to a fake (and unused) user, 
+     * checks that the expected number of roles are found when the user's roles
+     * are retrieved, and then revokes the user's grant.  The same steps are then
+     * performed for a role with no children.
+     * 
+     * @throws TapisClientException
+     */
+    private void checkUserRoles() throws TapisClientException
+    {
+    	// Pick a user that doesn't exist so that we can 
+    	// get precise role counts when we query the user's roles.
+    	final String user = "bozo";
+    	
+    	// Assign a root role that has 3 children.
+    	int grants = _skClient.grantUserRole(_parms.tenant, user, _names.get(0).roleName);
+    	var roles = _skClient.getUserRoles(_parms.tenant, user);
+    	if (roles.size() != 4) {
+	    	throw new TapisClientException("After granting user " + user + " role " +
+	    			_names.get(0).roleName + " we expected the user to have 4 roles assigned " + 
+	    			"but found " + roles.size() + " roles instead.");
+    	}
+    	_skClient.revokeUserRole(_parms.tenant, user, _names.get(0).roleName);
+
+    	// Assign a leaf role that has no children.
+    	grants = _skClient.grantUserRole(_parms.tenant, user, _names.get(7).roleName);
+    	roles = _skClient.getUserRoles(_parms.tenant, user);
+    	if (roles.size() != 1) {
+	    	throw new TapisClientException("After granting user " + user + " role " +
+	    			_names.get(7).roleName + " we expected the user to have 1 role assigned " + 
+	    			"but found " + roles.size() + " roles instead.");
+    	}
+    	_skClient.revokeUserRole(_parms.tenant, user, _names.get(7).roleName);
+    }
+    
+    /* ---------------------------------------------------------------------- */
+    /* removeChildRole:                                                       */
+    /* ---------------------------------------------------------------------- */
+    private void removeChildRole() throws TapisClientException
+    {
+    	// Get the number of permission of the row 1 and 3 roles.
+	    // Retrieve all permissions available in this role.
+	    final boolean immediate = false;
+	    var row1Perms = _skClient.getRolePermissions(_parms.tenant, _names.get(1).roleName, immediate);
+	    var row5Perms = _skClient.getRolePermissions(_parms.tenant, _names.get(5).roleName, immediate);
+	    
+	    // Remove one child.
+	    _skClient.removeChildRole(_parms.tenant, _names.get(5).roleName, _names.get(7).roleName);
+	    var row1Perms2 = _skClient.getRolePermissions(_parms.tenant, _names.get(1).roleName, immediate);
+	    var row5Perms2 = _skClient.getRolePermissions(_parms.tenant, _names.get(5).roleName, immediate);
+	    
+	    // Check the row 1 role's perm count..
+	    if (row1Perms.size() - row1Perms2.size() != 2) {
+	    	throw new TapisClientException("Removing role " + _names.get(7).roleName + " from role " +
+	    			_names.get(5).roleName + " did not lead to expected number (2) less permissions in " + 
+	    			_names.get(1).roleName + ".");
+	    }
+	    
+	    // Check the row 3 role's perm count.
+	    if (row5Perms.size() - row5Perms2.size() != 2) {
+	    	throw new TapisClientException("Removing role " + _names.get(7).roleName + " from role " +
+	    			_names.get(5).roleName + " did not lead to expected number (2) less permissions in " + 
+	    			_names.get(5).roleName + ".");
+	    }
+	    
+    }
+    
+    /* ---------------------------------------------------------------------- */
+    /* deleteRoles:                                                           */
+    /* ---------------------------------------------------------------------- */
+    private void deleteRoles() throws TapisClientException
+    {
+    	// Delete each role that was created.
+    	for (var name : _names) {
+    		_skClient.deleteRoleByName(_parms.tenant, name.roleName);
+    	}
+    	
+    	System.out.println("All " + _names.size() + " test roles have been deleted.");
     }
 
     /* ********************************************************************** */
