@@ -1,0 +1,12 @@
+{
+    "id": "icicledev-cameratraps",
+    "description": "Systems for testing camera-traps application",
+    "systemType": "LINUX",
+    "host": "129.114.35.48",
+    "effectiveUserId": "controller",
+    "defaultAuthnMethod": "PKI_KEYS",
+    "rootDir": "/home/controller/tapis",
+    "canExec": true,
+    "jobRuntimes": [{"runtimeType": "DOCKER"}],
+    "jobWorkingDir": "/"
+}

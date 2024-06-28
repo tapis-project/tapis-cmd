@@ -1,0 +1,63 @@
+{
+    "id": "ctctrl-icicledev",
+    "version": "0.1",
+    "description": "Run ctcontroller on icicledev to invoke camera-traps simulation",
+    "runtime": "DOCKER",
+    "jobType": "FORK",
+    "containerImage": "tapis/ctcontroller",
+    "jobAttributes": {
+        "execSystemId": "icicledev-cameratraps",
+        "execSystemExecDir": "${JobWorkingDir}/jobs/${JobUUID}",
+        "execSystemInputDir": "${JobWorkingDir}/jobs/${JobUUID}",
+        "execSystemOutputDir": "${JobWorkingDir}/jobs/${JobUUID}/output",
+        "parameterSet": {
+            "envVariables": [
+                { "key": "CT_CONTROLLER_NUM_NODES", 
+                  "value": "1", 
+                  "description": "The number of nodes on which the simulation will run",
+                  "inputMode": "REQUIRED" },
+                { "key": "CT_CONTROLLER_TARGET_SITE", 
+                  "description": "One of CHI@TACC, CHI@UC, TACC", 
+                  "inputMode": "REQUIRED" },
+                { "key": "CT_CONTROLLER_TARGET_USER", 
+                  "description": "The user name under which the simulation will run on the target site",
+                  "inputMode": "INCLUDE_ON_DEMAND" },
+                { "key": "CT_CONTROLLER_NODE_TYPE", 
+                  "description": "One of x86, jetson, rpi",
+                  "inputMode": "REQUIRED" },
+                { "key": "CT_CONTROLLER_GPU", 
+                  "value": "false", 
+                  "description": "Whether a GPU should be used during the simulation",
+                  "inputMode": "REQUIRED" },
+                { "key": "CT_CONTROLLER_MODEL", 
+                  "description": "URL to the AI model to be used in the simulation",
+                  "inputMode": "REQUIRED" },
+                { "key": "CT_CONTROLLER_INPUT", 
+                  "description": "The URL to the dataset against which the AI model will be applied" },
+                { "key": "CT_CONTROLLER_KEY_NAME", 
+                  "description": "The well-known name of a private key associated with the target site nodes" },
+                { "key": "CT_CONTROLLER_CT_VERSION", 
+                  "value": "0.3.3", 
+                  "description": "Version of the camera-traps simulator to run",
+                  "inputMode": "REQUIRED" },
+                { "key": "CT_CONTROLLER_REQUESTING_USER", 
+                  "description": "The name of the user who submitted the simulation request",
+                  "inputMode": "REQUIRED" },
+                { "key": "CT_CONTROLLER_OUTPUT_DIR", 
+                  "value": "/TapisOutput", 
+                  "description": "The directory where the controller writes its output",
+                  "inputMode": "REQUIRED" }
+           ]
+        },
+        "maxMinutes": 60
+    },
+    "notes":{
+        "targetSites": [
+            {"TACC": "Bare metal x86 at TACC"},
+            {"CHI@TACC": "Chameleon edge device at TACC"}, 
+            {"CHI@UC": "Chameleon edge device at U of Chicago"}
+        ],
+        "aiModels": [],
+        "dataSets": []
+    }
+}
