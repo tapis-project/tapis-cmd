@@ -3,7 +3,7 @@ package edu.utexas.tacc.tapis.cmd.driver;
 import java.util.Properties;
 
 import edu.utexas.tacc.tapis.security.client.SKClient;
-import edu.utexas.tacc.tapis.security.client.gen.model.ReqGrantAdminRole;
+import edu.utexas.tacc.tapis.security.client.gen.model.ReqGrantRole;
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 
 /** This test class exercises SK's previewPathPrefix API to illustrate how it works
@@ -33,7 +33,7 @@ public class SKGrantAdmin
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
-        var req = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqGrantAdminRole.class);
+        var req = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqGrantRole.class);
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
@@ -44,7 +44,7 @@ public class SKGrantAdmin
   
         //----------------------- USE CLIENT OBJECT -----------------------//
         // Create role
-        var updates = skClient.grantAdminRole(req.getTenant(), req.getUser());
+        var updates = skClient.grantRole(req.getTenant(), req.getUser(), req.getRoleName(), req.getRoleType());
         System.out.println("Number of newly assigned roles: " + updates);
     }
 

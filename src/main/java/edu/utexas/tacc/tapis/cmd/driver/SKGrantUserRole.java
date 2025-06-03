@@ -3,7 +3,7 @@ package edu.utexas.tacc.tapis.cmd.driver;
 import java.util.Properties;
 
 import edu.utexas.tacc.tapis.security.client.SKClient;
-import edu.utexas.tacc.tapis.security.client.gen.model.ReqGrantUserRole;
+import edu.utexas.tacc.tapis.security.client.gen.model.ReqGrantRole;
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 
 /** This test class exercises SK's previewPathPrefix API to illustrate how it works
@@ -33,7 +33,7 @@ public class SKGrantUserRole
         
         //----------------------- READ JSON REQUEST INTO REQ OBJECT -----------------------//
         // Convert json string into an app create request.
-        var req = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqGrantUserRole.class);
+        var req = TapisGsonUtils.getGson().fromJson(DriverUtils.readRequestFile(parms.reqFilename), ReqGrantRole.class);
         
         //----------------------- READ IN JWT PROFILE -----------------------//
         // Read base url and jwt from file.
