@@ -10,7 +10,7 @@ public class JobResubmit
 {
     /**This test submits a job using previously created systems, apps and job definitions. 
      * 
-     * JobSubmit -jwt <jwt filename located in $HOME/Tapis-cmd/jwt> -req <name of json request file located in driver/requests>
+     * JobResubmit -jwt <jwt filename located in $HOME/Tapis-cmd/jwt> -jobUuid <job UUID>
      */
     public static void main(String[] args) throws Exception
     {

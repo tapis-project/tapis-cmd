@@ -13,6 +13,11 @@
     <name>Tapis Shared Library</name>
     <description>Libraries used by multiple Tapis modules</description>
 
+    <properties>
+        <tapis-client-java.version>2.0.153-SNAPSHOT</tapis-client-java.version>
+        <tapis-shared-java.version>2.0.227-SNAPSHOT</tapis-shared-java.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
