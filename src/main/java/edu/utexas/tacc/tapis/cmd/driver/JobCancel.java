@@ -9,8 +9,7 @@ import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 public class JobCancel {
 
     /**
-     * This test submits a job using previously created systems, apps and job
-     * definitions.
+     * This test cancels a job that was previously submitted.
      * 
      * JobCancel -jwt <jwt filename located in $HOME/Tapis-cmd/jwt> -jobUuid <job
      * UUID>
@@ -39,7 +38,6 @@ public class JobCancel {
         // ----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create a job client.
         var jobClient = new JobsClient(url, props.getProperty("USER_JWT"));
-        // jobClient.addDefaultHeader("Content-Type", "application/json");
 
         // ----------------------- ASSIGN OBO USER AND TENANT -----------------------//
         if (parms.oboTenant != null)
@@ -52,7 +50,7 @@ public class JobCancel {
         System.out.println("--------------------------------------------------------------------");
         System.out.println(result.getMessage());
         System.out.println("--------------------------------------------------------------------");
-        System.out.println("Finished processing " + parms.reqFilename);
+        System.out.println("Finished processing cancelling for job " + parms.jobUuid);
     }
 
 }

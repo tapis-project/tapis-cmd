@@ -39,12 +39,6 @@ public class JobHideUnhide {
         System.out.println("Processing " + parms.reqFilename + ".");
         System.out.println("Contacting Jobs Service at " + url + ".");
 
-        // ----------------------- READ JSON REQUEST INTO REQ OBJECT
-        // -----------------------//
-        // Convert json string into a job submission request.
-        String jobUuid = parms.jobUuid;
-        String operation = parms.operation;
-
         // ----------------------- CREATE CLIENT OBJECT -----------------------//
         // Create a job client.
         var jobClient = new JobsClient(url, props.getProperty("USER_JWT"));
@@ -55,14 +49,14 @@ public class JobHideUnhide {
 
         // ----------------------- USE CLIENT OBJECT -----------------------//
 
-        JobHideDisplay result = switch (operation.toLowerCase()) {
+        JobHideDisplay result = switch (parms.operation.toLowerCase()) {
             case "hide":
-                yield jobClient.hideJob(jobUuid);
+                yield jobClient.hideJob(parms.jobUuid);
 
             case "unhide":
-                yield jobClient.unhideJob(jobUuid);
+                yield jobClient.unhideJob(parms.jobUuid);
             default:
-                throw new IllegalArgumentException("Invalid operation: " + operation +
+                throw new IllegalArgumentException("Invalid operation: " + parms.operation +
                         ". Must be 'hide' or 'unhide'");
         };
 
@@ -71,6 +65,6 @@ public class JobHideUnhide {
         System.out.println("--------------------------------------------------------------------");
         System.out.println(result.getMessage());
         System.out.println("--------------------------------------------------------------------");
-        System.out.println("Finished processing " + parms.reqFilename);
+        System.out.println("Finished processing " + parms.operation + " for job " + parms.jobUuid);
     }
 }
