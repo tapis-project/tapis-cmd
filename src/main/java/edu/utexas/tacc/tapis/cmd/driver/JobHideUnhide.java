@@ -52,7 +52,6 @@ public class JobHideUnhide {
         JobHideDisplay result = switch (parms.operation.toLowerCase()) {
             case "hide":
                 yield jobClient.hideJob(parms.jobUuid);
-
             case "unhide":
                 yield jobClient.unhideJob(parms.jobUuid);
             default:
