@@ -4,7 +4,7 @@ Provides a convenient way for Tapis commands to be issued from within a Java IDE
 
 ## Setup
 
-1. Builds with "mvn clean install" and "mvn -f shaded-pom.xml package"
+1. Builds with `mvn clean install && mvn -f shaded-pom.xml package`
 
 2. Any jwt files passed as a parameter **must** be placed in $HOME/TapisCmd/jwt and should have the naming
    convention "target-tenant-user.properties". The jwt should contain a BASE_URL and a USER_JWT.

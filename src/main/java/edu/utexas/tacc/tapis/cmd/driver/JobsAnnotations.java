@@ -9,7 +9,7 @@ import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 
 /**
  * JobsAnnotations -jwt <jwt filename located in $HOME/TapisCmd/jwt> -jobUuid
- * <job UUID> -req <payload file located in $HOME/TapisCmd/requests>
+ * <job UUID> -operation <put|patch> -req <payload file located in $HOME/TapisCmd/requests>
  */
 public class JobsAnnotations {
     public static void main(String[] args) throws Exception {
